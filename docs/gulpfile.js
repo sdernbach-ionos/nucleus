@@ -20,6 +20,7 @@
 */
 
 var gulp         = require('gulp');
+var path         = require('path');                  // Path utilities
 var gulpSass     = require('gulp-sass');             // Transpiles SASS to CSS
 var sass         = require('sass');                  // Dart Sass compiler
 var pug          = require('gulp-pug');              // Thin layer for Pug
@@ -184,9 +185,8 @@ gulp.task('build:styles', function () {
       unixNewlines: true,
       precision: 6,
       includePaths: [
-        __dirname + '/../node_modules',
-        __dirname + '/../node_modules/sass-mq',
-        __dirname + '/../assets/styles'
+        path.resolve(__dirname, '..', 'node_modules'),
+        path.resolve(__dirname, '..', 'assets', 'styles')
       ],
       outputStyle: config.production ? 'compressed' : 'expanded'
     }).on('error', sassCompiler.logError))
