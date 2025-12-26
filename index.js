@@ -11,16 +11,20 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
+import Config from './src/Config.js';
+import Verbose from './src/Verbose.js';
+import Crawler from './src/Crawler.js';
+import Transform from './src/Transform.js';
+import Substitute from './src/Substitute.js';
+import SearchIndex from './src/SearchIndex.js';
+import jade from 'pug';
+import { sync as mkdirpSync } from 'mkdirp';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-var Config = require('./src/Config');
-var Verbose = require('./src/Verbose');
-var Crawler = require('./src/Crawler');
-var Transform = require('./src/Transform');
-var Substitute = require('./src/Substitute');
-var SearchIndex = require('./src/SearchIndex');
-
-var jade = require('pug');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +38,7 @@ var jade = require('pug');
 
 // If requested, run the init script and stop the execution here
 if(Config.shouldRunInit()) {
-  require('./init');
+  await import('./init.js');
   process.exit(0);
 }
 
@@ -88,7 +92,7 @@ var searchIndex = SearchIndex.create(styleguides);
 Verbose.spin('Generating files');
 
 // Create the target folder
-require('mkdirp').sync(config.target);
+mkdirpSync(config.target);
 
 // Build the template files
 var templateFiles = ['atoms', 'molecules', 'index', 'nuclides', 'structures'];
@@ -106,15 +110,14 @@ for(var t in templateFiles) {
       demo: !!config.demo
     }
   });
-  require('fs').writeFileSync('./'+config.target+'/'+templateFiles[t]+'.html', html);
+  fs.writeFileSync('./'+config.target+'/'+templateFiles[t]+'.html', html);
 }
 
 // Copy assets
 if(config.target !== 'build') {
-var fs = require('fs');
-require('mkdirp').sync(config.target + '/styles');
-require('mkdirp').sync(config.target + '/fonts');
-require('mkdirp').sync(config.target + '/scripts');
+mkdirpSync(config.target + '/styles');
+mkdirpSync(config.target + '/fonts');
+mkdirpSync(config.target + '/scripts');
 
 fs
   .writeFileSync(config.target + '/styles/app.css',

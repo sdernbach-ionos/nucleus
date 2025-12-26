@@ -10,11 +10,9 @@
 
 /* global process */
 
-'use strict';
+import chalk from 'chalk';
 
-var chalk = require('chalk');
-
-module.exports = {
+export default {
   'init_target': function() {
     return {
       'title': 'Where shall I put the generated styleguide?',

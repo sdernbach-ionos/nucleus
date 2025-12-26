@@ -11,11 +11,9 @@
 
 /* global process */
 
-'use strict';
+import chalk from 'chalk';
 
-var chalk = require('chalk');
-
-module.exports = {
+export default {
   // Whenever there are annotations that are not allowed for certain
   // entity types.
   'invalid_annotaton_for_type': function(key, type, validKeys, raw) {
