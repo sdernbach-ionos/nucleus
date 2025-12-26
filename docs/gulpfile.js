@@ -105,18 +105,6 @@ var config = {
 
 /*
 |--------------------------------------------------------------------------
-| TASK GROUPS
-|--------------------------------------------------------------------------
-*/
-
-gulp.task('default',  gulp.series('dev'));
-gulp.task('dist',     gulp.series('build', 'copy'));
-gulp.task('dev',      gulp.series('build', 'copy', gulp.parallel('watch', 'livereload')));
-gulp.task('copy',     gulp.parallel('copy:images', 'copy:favicon'));
-gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('build:sprites', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
-
-/*
-|--------------------------------------------------------------------------
 | VIEWS
 |--------------------------------------------------------------------------
 */
@@ -363,3 +351,15 @@ gulp.task('clean:styles', function () {
     var relative_path = event.path.replace(__dirname, '');
     gutil.log('file ' + gutil.colors.magenta(relative_path) + ' ' + event.type);
   }
+
+/*
+|--------------------------------------------------------------------------
+| TASK GROUPS (DEFINED AT END TO REFERENCE ALL TASKS)
+|--------------------------------------------------------------------------
+*/
+
+gulp.task('copy',     gulp.parallel('copy:images', 'copy:favicon'));
+gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('build:sprites', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
+gulp.task('dist',     gulp.series('build', 'copy'));
+gulp.task('dev',      gulp.series('build', 'copy', gulp.parallel('watch', 'livereload')));
+gulp.task('default',  gulp.series('dev'));
