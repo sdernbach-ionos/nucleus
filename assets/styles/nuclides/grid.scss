@@ -1,4 +1,4 @@
-// grid.scss -- Simple dependency-free grid system (replaces gridle)
+// grid.scss -- Simple dependency-free grid system
 //
 // Copyright (C) 2016 Michael Seibt
 //
@@ -17,7 +17,7 @@ $grid-gutter: 20px;
   flex-wrap: wrap;
   margin-left: -$grid-gutter / 2;
   margin-right: -$grid-gutter / 2;
-  
+
   &.SG-row-full {
     margin-left: 0;
     margin-right: 0;
@@ -31,7 +31,7 @@ $grid-gutter: 20px;
     max-width: percentage($i / $grid-columns);
     padding-left: $grid-gutter / 2;
     padding-right: $grid-gutter / 2;
-    
+
     &.SG-no-gutter,
     &.SG-nogutter {
       padding-left: 0;
@@ -49,7 +49,7 @@ $grid-gutter: 20px;
       max-width: percentage($i / $grid-columns);
     }
   }
-  
+
   .SG-txt-center\@mobile { text-align: center; }
   .SG-txt-right\@mobile { text-align: right; }
   .SG-txt-left\@mobile { text-align: left; }
@@ -63,7 +63,7 @@ $grid-gutter: 20px;
       max-width: percentage($i / $grid-columns);
     }
   }
-  
+
   .SG-txt-center\@tablet { text-align: center; }
   .SG-txt-right\@tablet { text-align: right; }
   .SG-txt-left\@tablet { text-align: left; }

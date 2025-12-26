@@ -13,7 +13,7 @@
     }
   ],
   "scripts": {
-    "test": "nyc mocha",
+    "test": "./node_modules/.bin/nyc mocha",
     "build": "./node_modules/.bin/gulp build --production",
     "build_docs": "./node_modules/.bin/gulp dist --gulpfile docs/gulpfile.js --production"
   },
