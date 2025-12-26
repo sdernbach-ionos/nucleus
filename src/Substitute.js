@@ -12,6 +12,7 @@
 
 
 import _ from 'lodash';
+import { loremIpsum } from 'lorem-ipsum';
 import Verbose from './Verbose.js';
 
 var Substitute = {
@@ -84,7 +85,7 @@ Substitute.methods.lipsum = function (quantity, type) {
   }
 
   var rnd = 0.01;
-  const { loremIpsum } = require('lorem-ipsum');
+  
   return loremIpsum({
     count: quantity,
     units: type,

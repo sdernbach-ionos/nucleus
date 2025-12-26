@@ -1,4 +1,4 @@
-'use strict';
+
 
 var Helpers = {
   'logCalled': 0,
@@ -18,4 +18,4 @@ Helpers.hook = function(verboseObject, method) {
   verboseObject[method] = Helpers[method];
 };
 
-module.exports = Helpers;
+export default Helpers;

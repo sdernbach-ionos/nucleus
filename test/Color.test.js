@@ -1,12 +1,12 @@
 /* global describe */
 /* global it */
 
-'use strict';
 
-var assert = require('assert');
-var Color = require('../src/entities/Color.js');
-var Helpers = require('./helpers');
-var Verbose = require('../src/Verbose.js');
+
+import assert from 'assert';
+import Color from '../src/entities/Color.js';
+import Helpers from './helpers.js';
+import Verbose from '../src/Verbose.js';
 
 describe('Color', function() {
 

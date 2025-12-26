@@ -320,3 +320,6 @@ gulp.task('lint',    gulp.parallel('lint:scripts'/*, 'lint:styles'*/));
 gulp.task('watch',   gulp.parallel('watch:styles', 'watch:markup', 'watch:scripts', 'livereload'));
 gulp.task('dev',     gulp.series('build', gulp.parallel('watch', 'lint')));
 gulp.task('default', gulp.series('dev'));
+
+// Temporary build task without icons (gulp-iconfont v12 ESM issue)
+gulp.task('build-no-icons',   gulp.series(gulp.parallel('clean:styles', 'clean:scripts', 'clean:static'), gulp.parallel('styles', 'scripts', 'copy:static')));

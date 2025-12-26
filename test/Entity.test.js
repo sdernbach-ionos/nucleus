@@ -1,12 +1,12 @@
 /* global describe */
 /* global it */
 
-'use strict';
 
-var assert = require('assert');
-var Helpers = require('./helpers');
-var Entity = require('../src/entities/Entity.js');
-var Verbose = require('../src/Verbose.js');
+
+import assert from 'assert';
+import Helpers from './helpers.js';
+import Entity from '../src/entities/Entity.js';
+import Verbose from '../src/Verbose.js';
 
 describe('Entity', function() {
 

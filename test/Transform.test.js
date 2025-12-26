@@ -1,13 +1,13 @@
 /* global describe */
 /* global it */
 
-'use strict';
 
-var assert = require('assert');
 
-var Helpers = require('./helpers');
-var Verbose = require('../src/Verbose.js');
-var Transform = require('../src/Transform.js');
+import assert from 'assert';
+
+import Helpers from './helpers.js';
+import Verbose from '../src/Verbose.js';
+import Transform from '../src/Transform.js';
 
 describe('Transform', function() {
 

@@ -1,3 +1,4 @@
+import fs from 'fs';
 /* Crawler.js -- Scans the PostCSS tree for relevant annotation blocks
  *
  * Copyright (C) 2016 Michael Seibt
@@ -26,7 +27,7 @@ var Crawler = {};
  *         Styleguide information
  */
 Crawler.processFile = function ( file ) {
-  var fileContent = require('fs').readFileSync(file);
+  var fileContent = fs.readFileSync(file);
 
   // Normalize file content to Unix EOLs
   fileContent = fileContent

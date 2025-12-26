@@ -1,12 +1,12 @@
 /* global describe */
 /* global it */
 
-'use strict';
 
-var assert = require('assert');
-var Atom = require('../src/entities/Atom.js');
-var Helpers = require('./helpers');
-var Verbose = require('../src/Verbose.js');
+
+import assert from 'assert';
+import Atom from '../src/entities/Atom.js';
+import Helpers from './helpers.js';
+import Verbose from '../src/Verbose.js';
 
 describe('Atom', function() {
 
