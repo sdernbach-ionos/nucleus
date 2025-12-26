@@ -63,7 +63,7 @@
     "gulp-autoprefixer": "^10.0.0",
     "gulp-consolidate": "^0.2.0",
     "gulp-copy": "^5.0.0",
-    "gulp-iconfont": "^12.0.0",
+    "gulp-iconfont": "^11.0.1",
     "gulp-imagemin": "^9.2.0",
     "gulp-jshint": "^2.1.0",
     "gulp-livereload": "^4.0.2",

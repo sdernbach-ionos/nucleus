@@ -98,6 +98,8 @@ gulp.task('icons', function(){
       fontName: 'SG-icons', // required
       prependUnicode: true, // recommended option
       formats: ['ttf', 'eot', 'woff'], // default, 'woff2' and 'svg' are available
+      normalize: true,
+      fontHeight: 1001
     }))
       .on('glyphs', function(glyphs) {
         gulp.src(SOURCES + '/styles/tools/icons.lodash.css')
