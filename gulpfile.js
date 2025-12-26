@@ -25,7 +25,7 @@ var sass        = require('sass');                  // Dart Sass compiler
 var webpack     = require('webpack');               // Used for Javascript packing
 var livereload  = require('gulp-livereload');       // Reloads the browser window after changes
 var gutil       = require('gulp-util');             // Utility toolbox
-var del         = require('del');                   // Removes a set of files
+var { deleteAsync } = require('del');               // Removes a set of files
 var iconfont    = require('gulp-iconfont');         // Generates an icon-font
 var consolidate = require('gulp-consolidate');      // Passes a file to a template engine
 var rename      = require("gulp-rename");           // Renames a set of files
@@ -116,22 +116,22 @@ gulp.task('icons', function(){
 
 /** Clean old sass files */
 gulp.task('clean:styles', function () {
-    return del(TARGET + '/styles/*.css');
+    return deleteAsync(TARGET + '/styles/*.css');
 });
 
 /** Clean old icon fonts */
 gulp.task('clean:icons', function () {
-    return del(TARGET + '/fonts/*.*');
+    return deleteAsync(TARGET + '/fonts/*.*');
 });
 
 /** Clean old javascript bundles */
 gulp.task('clean:scripts', function () {
-    return del(TARGET + '/scripts/*.js');
+    return deleteAsync(TARGET + '/scripts/*.js');
 });
 
 /** Clean old static files */
 gulp.task('clean:static', function () {
-    return del([
+    return deleteAsync([
       TARGET + '/favicon.ico'
     ]);
 });

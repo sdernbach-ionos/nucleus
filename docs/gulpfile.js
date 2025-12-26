@@ -35,7 +35,7 @@ var merge        = require('merge-stream');          // Merges two streams
 var spritesmith  = require('gulp.spritesmith');      // Generates a spritesheet
 var buffer       = require('vinyl-buffer');          // Creates a vinyl file buffer
 var autoprefixer = require('gulp-autoprefixer');     // Adds prefixes to css properties if needed
-var del          = require('del');                   // Removes a set of files
+var { deleteAsync } = require('del');                // Removes a set of files
 var webpack      = require('webpack');               // Used for Javascript packing
 
 // Configure gulp-sass to use Dart Sass
@@ -114,7 +114,7 @@ gulp.task('build:views', function () {
     .src([
       config.sources + '/views/*.pug',
       config.sources + '/views/doc/*.pug'
-    ])
+    ], { allowEmpty: true })
     .pipe(plumber())
     .pipe(pug({
       // ...
@@ -231,12 +231,13 @@ gulp.task('build:icons', function () {
 gulp.task('build:sprites', function () {
   // Hash the content of the sprite elements folders to bust the cache.
   var hash = makeHash([
-    config.sources + '/sprites/*.png'
+    config.sources + '/sprites/*.png',
+    '!' + config.sources + '/sprites/logo-*.png'
   ]);
 
   // Create the data for our spritesheet
   var sprite = gulp
-    .src(config.sources + '/sprites/*.png')
+    .src([config.sources + '/sprites/*.png', '!' + config.sources + '/sprites/logo-*.png'])
     .pipe(plumber())
     .pipe(spritesmith({
       imgName: 'sprite.png',
@@ -302,11 +303,11 @@ gulp.task('lint:scripts', function () {});
 */
 
 gulp.task('clean:scripts', function () {
-  return del(config.target + '/scripts/*.js');
+  return deleteAsync(config.target + '/scripts/*.js');
 });
 
 gulp.task('clean:styles', function () {
-  return del(config.target + '/styles/*.css');
+  return deleteAsync(config.target + '/styles/*.css');
 });
 
 /*
