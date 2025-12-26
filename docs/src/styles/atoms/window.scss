@@ -62,8 +62,8 @@
   height: 400px;
 
   .split-pane__handle {
-    @extend .ico;
-    @extend .ico--glide;
+    @extend .ico !optional;
+    @extend .ico--glide !optional;
     width: 30px;
     height: 30px;
     background-color: colors.$color--accent;
