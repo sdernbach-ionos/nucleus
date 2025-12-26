@@ -62,12 +62,21 @@
   height: 400px;
 
   .split-pane__handle {
-    @extend .ico !optional;
-    @extend .ico--glide !optional;
     width: 30px;
     height: 30px;
     background-color: colors.$color--accent;
     border-radius: 100%;
+    
+    &:before {
+      display: inline-block;
+      font-family: "icons";
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      content: "\EA08"; // ico--glide icon
+    }
     position: absolute;
     right: -15px;
     top: 0;

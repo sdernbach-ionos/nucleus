@@ -70,8 +70,7 @@ gulp.task('styles', function () {
       includePaths: [
         __dirname + '/node_modules'
       ],
-      outputStyle: PRODUCTION ? 'compressed' : 'expanded',
-      silenceDeprecations: ['legacy-js-api', 'global-builtin', 'import']
+      outputStyle: PRODUCTION ? 'compressed' : 'expanded'
     }).on('error', function(err) {
       // Log the error but don't fail the build
       gutil.log(gutil.colors.red('Sass Error:'), err.message);

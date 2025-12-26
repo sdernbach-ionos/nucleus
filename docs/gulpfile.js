@@ -187,8 +187,7 @@ gulp.task('build:styles', function () {
         __dirname + '/../node_modules',
         __dirname + '/../assets/styles'
       ],
-      outputStyle: config.production ? 'compressed' : 'expanded',
-      silenceDeprecations: ['legacy-js-api', 'global-builtin']
+      outputStyle: config.production ? 'compressed' : 'expanded'
     }).on('error', sassCompiler.logError))
     .pipe(autoprefixer())
     .pipe(plumber.stop())
