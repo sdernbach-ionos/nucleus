@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+
 // pills.scss -- Styles for inline pills
 //
 // Copyright (C) 2016 Michael Seibt
@@ -17,9 +20,9 @@
  *  <div class="SG-pill">12</div>
  */
 .SG-pill {
-  @include lato(300);
+  @include fonts.lato(300);
 
-  background: $color--accent;
+  background: colors.$color--accent;
   font-size: 10px;
   display: inline-block;
   padding: 4px 9px;

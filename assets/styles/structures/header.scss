@@ -1,3 +1,7 @@
+@use "../nuclides/colors";
+@use "../nuclides/reset";
+@use "../nuclides/tools";
+
 // header.scss -- Header bar styles
 //
 // Copyright (C) 2016 Michael Seibt
@@ -26,9 +30,9 @@
  */
 
 .SG-header {
-  @include reset();
-  @include clearAfter();
-  border-bottom: 1px solid $color--whitesmoke;
+  @include reset.reset();
+  @include tools.clearAfter();
+  border-bottom: 1px solid colors.$color--whitesmoke;
   padding: 0 40px;
   margin-bottom: 100px;
   position: relative;

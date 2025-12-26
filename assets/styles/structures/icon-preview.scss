@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/reset";
+
 // icon-preview.scss -- Preview for an element of the icon stack
 //
 // Copyright (C) 2016 Michael Seibt
@@ -8,12 +11,12 @@
 // of the MIT license. See the LICENSE file for details.
 
 .SG-icon-preview {
-  @include reset();
+  @include reset.reset();
   margin-bottom: 50px;
 
   .SG-icon-preview__name {
-    @include reset();
-    color: $color--accent;
+    @include reset.reset();
+    color: colors.$color--accent;
     display: inline-block;
   }
 
@@ -24,7 +27,7 @@
     &::after {
       display: block;
       font-size: 12px;
-      color: $color--light-gray;
+      color: colors.$color--light-gray;
       margin-top: 10px;
     }
   }

@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+
 // mixin.scss -- Mixin header introducing a mixin component
 //
 // Copyright (C) 2016 Michael Seibt
@@ -22,18 +25,18 @@
  *  </div>
  */
 .SG-mixin {
-  @include lato(300);
+  @include fonts.lato(300);
   font-size: 22px;
   margin-bottom: 1.5em;
 
   .SG-mixin__parameters {
-    color: $color--gray;
+    color: colors.$color--gray;
     font-style: italic;
     margin-left: 1em;
   }
 
   .SG-mixin__file {
-    color: $color--light-gray;
+    color: colors.$color--light-gray;
     display: block;
     font-size: 14px;
     margin-top: 0.5em;

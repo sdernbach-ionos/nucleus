@@ -1,3 +1,5 @@
+@use "../nuclides/colors";
+
 // component.scss -- Component preview composition
 //
 // Copyright (C) 2016 Michael Seibt
@@ -11,7 +13,7 @@
   margin-bottom: 75px;
 
   .SG-component__title {
-    color: $color--dark-gray;
+    color: colors.$color--dark-gray;
     font-size: 21px;
   }
 

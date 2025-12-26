@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/reset";
+
 // navigation.scss -- Top-level navigation
 //
 // Copyright (C) 2016 Michael Seibt
@@ -27,7 +30,7 @@
  *  </ul>
  */
 .SG-nav {
-  @include reset();
+  @include reset.reset();
   list-style-type: none;
   text-align: center;
 
@@ -40,20 +43,20 @@
     display: inline-block;
     padding: 22px 10px 24px;
     margin: 0 15px;
-    color: $color--gray;
+    color: colors.$color--gray;
     font-size: 16px;
     &:hover {
-      color: $color--dark-gray;
-      border-bottom: 2px solid $color--light-gray;
+      color: colors.$color--dark-gray;
+      border-bottom: 2px solid colors.$color--light-gray;
     }
   }
 
   .SG-nav__item--active {
-    border-bottom: 3px solid $color--accent;
+    border-bottom: 3px solid colors.$color--accent;
     margin-bottom: -1px;
-    color: $color--dark-gray;
+    color: colors.$color--dark-gray;
     &:hover {
-      border-bottom: 3px solid $color--accent;
+      border-bottom: 3px solid colors.$color--accent;
     }
   }
 }
@@ -79,7 +82,7 @@
  *  </ul>
  */
 .SG-nav-icons {
-  @include reset();
+  @include reset.reset();
   list-style-type: none;
   line-height: 67px;
   text-align: right;
@@ -92,13 +95,13 @@
   }
 
   .SG-nav-icons__item {
-    color: $color--light-gray;
+    color: colors.$color--light-gray;
     &:hover {
-      color: $color--gray;
+      color: colors.$color--gray;
     }
 
     &.SG--active {
-      color: $color--dark-gray;
+      color: colors.$color--dark-gray;
     }
   }
 }
@@ -143,7 +146,7 @@
     padding-left: 1.5em;
     font-size: 14px;
     list-style-type: disc;
-    color: $color--dark-gray;
+    color: colors.$color--dark-gray;
     margin-bottom: 1em;
   }
 
@@ -152,8 +155,8 @@
   }
 
   .SG-toc__category {
-    color: $color--accent;
-    border-bottom: 1px dashed $color--light-gray;
+    color: colors.$color--accent;
+    border-bottom: 1px dashed colors.$color--light-gray;
     padding-bottom: 0.5em;
     margin-bottom: 0.5em;
     font-size: 16px;

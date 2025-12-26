@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // grid.scss -- Simple dependency-free grid system
 //
 // Copyright (C) 2016 Michael Seibt
@@ -15,8 +17,8 @@ $grid-gutter: 20px;
 .SG-row {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -$grid-gutter / 2;
-  margin-right: -$grid-gutter / 2;
+  margin-left: math.div(-$grid-gutter, 2);
+  margin-right: math.div(-$grid-gutter, 2);
 
   &.SG-row-full {
     margin-left: 0;
@@ -27,10 +29,10 @@ $grid-gutter: 20px;
 // Grid columns
 @for $i from 1 through $grid-columns {
   .SG-gr-#{$i} {
-    flex: 0 0 percentage($i / $grid-columns);
-    max-width: percentage($i / $grid-columns);
-    padding-left: $grid-gutter / 2;
-    padding-right: $grid-gutter / 2;
+    flex: 0 0 math.percentage(math.div($i, $grid-columns));
+    max-width: math.percentage(math.div($i, $grid-columns));
+    padding-left: math.div($grid-gutter, 2);
+    padding-right: math.div($grid-gutter, 2);
 
     &.SG-no-gutter,
     &.SG-nogutter {
@@ -45,8 +47,8 @@ $grid-gutter: 20px;
 @media (max-width: 480px) {
   @for $i from 1 through $grid-columns {
     .SG-gr-#{$i}\@mobile {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
 
@@ -59,8 +61,8 @@ $grid-gutter: 20px;
 @media (min-width: 481px) and (max-width: 1024px) {
   @for $i from 1 through $grid-columns {
     .SG-gr-#{$i}\@tablet {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
 
@@ -79,6 +81,6 @@ $grid-gutter: 20px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: $grid-gutter / 2;
-  padding-right: $grid-gutter / 2;
+  padding-left: math.div($grid-gutter, 2);
+  padding-right: math.div($grid-gutter, 2);
 }
