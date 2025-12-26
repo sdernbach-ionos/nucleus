@@ -84,14 +84,15 @@ Substitute.methods.lipsum = function (quantity, type) {
   }
 
   var rnd = 0.01;
-  return require('lorem-ipsum')({
+  const { loremIpsum } = require('lorem-ipsum');
+  return loremIpsum({
     count: quantity,
     units: type,
     random: this.staticLipsum ? function() {
       if(rnd>=1) rnd = 0.01;
       rnd += 0.01;
       return rnd;
-    } : Math.rand
+    } : Math.random
   });
 };
 

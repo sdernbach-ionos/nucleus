@@ -31,6 +31,7 @@ var Color = function(raw) {
   }
 
   var colorValue = ColorConverter(raw.element.value.replace(/ *!default/, ''));
+  var rgbArray = colorValue.rgb().array();
 
   return {
     name: raw.descriptor,
@@ -42,9 +43,9 @@ var Color = function(raw) {
     location: 'nuclides.html',
     hash: this.hash(),
     values: {
-      hex: colorValue.hexString(),
-      rgba: colorValue.rgbaString(),
-      darker: colorValue.darken(0.1).hexString()
+      hex: colorValue.hex(),
+      rgba: 'rgba(' + rgbArray[0] + ', ' + rgbArray[1] + ', ' + rgbArray[2] + ', ' + colorValue.alpha() + ')',
+      darker: colorValue.darken(0.1).hex()
     }
   };
 

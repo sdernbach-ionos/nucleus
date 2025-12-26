@@ -20,7 +20,8 @@
 */
 
 var gulp         = require('gulp');
-var sass         = require('gulp-sass');             // Transpiles SASS to CSS
+var gulpSass     = require('gulp-sass');             // Transpiles SASS to CSS
+var sass         = require('sass');                  // Dart Sass compiler
 var pug          = require('gulp-pug');              // Thin layer for Pug
 var rename       = require("gulp-rename");           // Renames a set of files
 var iconfont     = require('gulp-iconfont');         // Generates an icon-font
@@ -36,6 +37,9 @@ var buffer       = require('vinyl-buffer');          // Creates a vinyl file buf
 var autoprefixer = require('gulp-autoprefixer');     // Adds prefixes to css properties if needed
 var del          = require('del');                   // Removes a set of files
 var webpack      = require('webpack');               // Used for Javascript packing
+
+// Configure gulp-sass to use Dart Sass
+var sassCompiler = gulpSass(sass);
 
 /*
 |--------------------------------------------------------------------------
@@ -105,12 +109,11 @@ var config = {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('default',  ['dev']);
-gulp.task('dist',     ['build', 'copy']);
-gulp.task('dev',      ['build', 'copy', 'watch']);
-gulp.task('copy',     ['copy:images', 'copy:favicon']);
-gulp.task('build',    ['build:views', 'build:styles', 'build:scripts']);
-gulp.task('watch',    ['watch:views', 'watch:styles', 'livereload']);
+gulp.task('default',  gulp.series('dev'));
+gulp.task('dist',     gulp.series('build', 'copy'));
+gulp.task('dev',      gulp.series('build', 'copy', gulp.parallel('watch', 'livereload')));
+gulp.task('copy',     gulp.parallel('copy:images', 'copy:favicon'));
+gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('build:sprites', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +121,7 @@ gulp.task('watch',    ['watch:views', 'watch:styles', 'livereload']);
 |--------------------------------------------------------------------------
 */
 
-gulp.task('build:views', [], function () {
+gulp.task('build:views', function () {
   return gulp
     .src([
       config.sources + '/views/*.pug',
@@ -139,7 +142,7 @@ gulp.task('build:views', [], function () {
 |--------------------------------------------------------------------------
 */
 
-  gulp.task('build:scripts', ['clean:scripts'], function (callback) {
+  gulp.task('build:scripts', function (callback) {
     webpack({
      // watch: !config.production, TODO!
       context: __dirname + '/' + config.sources + '/scripts',
@@ -147,20 +150,24 @@ gulp.task('build:views', [], function () {
         'app': './app',
       },
       output: {
-        path: config.target + '/scripts/',
+        path: __dirname + '/' + config.target + '/scripts/',
         publicPath: '/scripts/',
         filename: '[name].js',
         chunkFilename: '[chunkhash].bundle.js'
       },
       module: {
-        loaders: [
-          { test: /\.html$/, loader: "tpl-loader" }
+        rules: [
+          { test: /\.html$/, loader: require.resolve('../webpack-tpl-loader.js') }
         ]
       },
-      amd: {jQuery: true },
       resolve: {
-        fallback: [
-          __dirname + '/' + config.sources + '/scripts'
+        fallback: {
+          path: false,
+          fs: false
+        },
+        modules: [
+          __dirname + '/' + config.sources + '/scripts',
+          'node_modules'
         ]
       },
       plugins: [
@@ -169,7 +176,8 @@ gulp.task('build:views', [], function () {
           jQuery: 'jquery',
           'window.jQuery': 'jquery',
         }),
-      ].concat(config.production ? [new webpack.optimize.UglifyJsPlugin({ output: {comments: false} })] : [])
+      ].concat(config.production ? [new webpack.optimize.ModuleConcatenationPlugin()] : []),
+      mode: config.production ? 'production' : 'development'
     }, function(e,s) { webpack_error_handler(e,s,callback); });
   });
 
@@ -180,11 +188,11 @@ gulp.task('build:views', [], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('build:styles', ['build:sprites', 'build:icons'], function () {
+gulp.task('build:styles', function () {
   return gulp
     .src(config.sources + '/styles/app.scss')
     .pipe(plumber())
-    .pipe(sass({
+    .pipe(sassCompiler({
       unixNewlines: true,
       precision: 6,
       includePaths: [
@@ -192,11 +200,8 @@ gulp.task('build:styles', ['build:sprites', 'build:icons'], function () {
         __dirname + '/../assets/styles'
       ],
       outputStyle: config.production ? 'compressed' : 'nested'
-    }).on('error', sass.logError))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
+    }).on('error', sassCompiler.logError))
+    .pipe(autoprefixer())
     .pipe(plumber.stop())
     .pipe(gulp.dest(config.target + '/styles'))
     .pipe(livereload());
@@ -208,7 +213,7 @@ gulp.task('build:styles', ['build:sprites', 'build:icons'], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('build:icons', [], function () {
+gulp.task('build:icons', function () {
   return gulp.src(config.sources + '/icons/*.svg')
     .pipe(iconfont({
       fontName: 'icons',
@@ -235,7 +240,7 @@ gulp.task('build:icons', [], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('build:sprites', [], function () {
+gulp.task('build:sprites', function () {
   // Hash the content of the sprite elements folders to bust the cache.
   var hash = makeHash([
     config.sources + '/sprites/*.png'
@@ -276,7 +281,7 @@ gulp.task('build:sprites', [], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('copy:images', [], function () {
+gulp.task('copy:images', function () {
   return gulp
     .src([
       config.sources + '/images/*.png',
@@ -287,7 +292,7 @@ gulp.task('copy:images', [], function () {
     .pipe(gulp.dest(config.target + '/images'));
 });
 
-gulp.task('copy:favicon', [], function () {
+gulp.task('copy:favicon', function () {
   return gulp
     .src(config.sources + '/favicon.ico')
     .pipe(gulp.dest(config.target));
@@ -299,8 +304,8 @@ gulp.task('copy:favicon', [], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('lint:styles', [], function () {});
-gulp.task('lint:scripts', [], function () {});
+gulp.task('lint:styles', function () {});
+gulp.task('lint:scripts', function () {});
 
 /*
 |--------------------------------------------------------------------------
@@ -308,8 +313,12 @@ gulp.task('lint:scripts', [], function () {});
 |--------------------------------------------------------------------------
 */
 
-gulp.task('clean:scripts', [], function () {
+gulp.task('clean:scripts', function () {
   return del(config.target + '/scripts/*.js');
+});
+
+gulp.task('clean:styles', function () {
+  return del(config.target + '/styles/*.css');
 });
 
 /*
@@ -318,7 +327,7 @@ gulp.task('clean:scripts', [], function () {
 |--------------------------------------------------------------------------
 */
 
-  gulp.task('livereload', [], function () {
+  gulp.task('livereload', function () {
     gutil.log(gutil.colors.bgGreen.white('Starting LiveReload ...'));
     gutil.log(gutil.colors.green('When developing locally make sure ',
       '"Allow access to file URLs"'));
@@ -327,7 +336,7 @@ gulp.task('clean:scripts', [], function () {
     livereload.listen();
   });
 
-  gulp.task('watch:styles', [], function () {
+  gulp.task('watch:styles', function () {
     return gulp
       .watch([
         config.sources + '/styles/*.scss',
@@ -335,18 +344,20 @@ gulp.task('clean:scripts', [], function () {
         config.sources + '/sprites/*.png',
         config.sources + '/icons/*.svg',
         '../styleguide/assets/**/*.scss'
-      ], ['build:styles', 'lint:styles'])
+      ], gulp.series('build:styles', 'lint:styles'))
       .on('change', watcher_log_callback);
   });
 
   gulp.task('watch:views', function () {
-     gulp
+     return gulp
       .watch([
         config.sources + '/views/*.pug',
         config.sources + '/views/**/*.pug',
-      ], ['build:views'])
+      ], gulp.series('build:views'))
       .on('change', watcher_log_callback);
   });
+
+  gulp.task('watch', gulp.parallel('watch:views', 'watch:styles'));
 
   function watcher_log_callback (event) {
     var relative_path = event.path.replace(__dirname, '');

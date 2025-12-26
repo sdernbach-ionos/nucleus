@@ -20,7 +20,8 @@
 */
 
 var gulp        = require('gulp');
-var sass        = require('gulp-sass');             // Transpiles SASS to CSS
+var gulpSass    = require('gulp-sass');             // Transpiles SASS to CSS
+var sass        = require('sass');                  // Dart Sass compiler
 var webpack     = require('webpack');               // Used for Javascript packing
 var livereload  = require('gulp-livereload');       // Reloads the browser window after changes
 var gutil       = require('gulp-util');             // Utility toolbox
@@ -35,6 +36,9 @@ var postcss     = require("gulp-postcss");          // Parse style sheet files
 var reporter    = require("postcss-reporter");      // Reporter for PostCSS
 var stylelint   = require("stylelint");             // Lints styles according to a ruleset
 var scss        = require("postcss-scss");          // SCSS syntax for PostCSS
+
+// Configure gulp-sass to use Dart Sass
+var sassCompiler = gulpSass(sass);
 
 /*
 |--------------------------------------------------------------------------
@@ -51,33 +55,21 @@ var LOG_CODE   = [
 
 /*
 |--------------------------------------------------------------------------
-| TASK GROUPS
-|--------------------------------------------------------------------------
-*/
-
-gulp.task('default', ['dev']);
-gulp.task('dev',     ['build', 'watch', 'lint']);
-gulp.task('build',   ['styles', 'scripts', 'copy:static']);
-gulp.task('lint',    ['lint:scripts'/*, 'lint:styles'*/]);
-gulp.task('watch',   ['watch:styles', 'watch:markup', 'watch:scripts', 'livereload']);
-
-/*
-|--------------------------------------------------------------------------
 | STYLESHEET GENERATION AND OPTIMIZATION
 |--------------------------------------------------------------------------
 */
 
-gulp.task('styles', ['clean:styles', 'icons'], function () {
-  gulp
+gulp.task('styles', function () {
+  return gulp
     .src(SOURCES + '/styles/app.scss')
-    .pipe(sass({
+    .pipe(sassCompiler({
       unixNewlines: true,
       precision: 6,
       includePaths: [
         __dirname + '/node_modules'
       ],
       outputStyle: PRODUCTION ? 'compressed' : 'nested'
-    }).on('error', sass.logError))
+    }).on('error', sassCompiler.logError))
     .pipe(gulp.dest(TARGET + '/styles'))
     .pipe(livereload());
 });
@@ -88,7 +80,7 @@ gulp.task('styles', ['clean:styles', 'icons'], function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('icons', ['clean:icons'], function(){
+gulp.task('icons', function(){
   return gulp.src(SOURCES + '/icons/*.svg')
     .pipe(iconfont({
       fontName: 'SG-icons', // required
@@ -145,27 +137,31 @@ gulp.task('clean:static', function () {
 */
 
 /** Run WebPack and create chunks */
-  gulp.task('scripts', ['clean:scripts'], function (callback) {
+  gulp.task('scripts', function (callback) {
     webpack({
       context: __dirname + '/' + SOURCES + '/scripts',
       entry: {
         'app': './app',
       },
       output: {
-        path: TARGET + '/scripts/',
+        path: __dirname + '/' + TARGET + '/scripts/',
         publicPath: '/scripts/',
         filename: '[name].js',
         chunkFilename: '[chunkhash].bundle.js'
       },
       module: {
-        loaders: [
-          { test: /\.html$/, loader: "tpl-loader" }
+        rules: [
+          { test: /\.html$/, loader: require.resolve('./webpack-tpl-loader.js') }
         ]
       },
-      amd: {jQuery: true },
       resolve: {
-        fallback: [
-          __dirname + '/' + SOURCES + '/scripts'
+        fallback: {
+          path: false,
+          fs: false
+        },
+        modules: [
+          __dirname + '/' + SOURCES + '/scripts',
+          'node_modules'
         ]
       },
       plugins: [
@@ -174,7 +170,8 @@ gulp.task('clean:static', function () {
           jQuery: 'jquery',
           'window.jQuery': 'jquery',
         }),
-      ].concat(PRODUCTION ? [new webpack.optimize.UglifyJsPlugin({ output: {comments: false} })] : [])
+      ].concat(PRODUCTION ? [new webpack.optimize.ModuleConcatenationPlugin()] : []),
+      mode: PRODUCTION ? 'production' : 'development'
     }, function(e,s) { webpack_error_handler(e,s,callback); });
   });
 
@@ -184,7 +181,7 @@ gulp.task('clean:static', function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('copy:static', ['clean:static'], function (){
+gulp.task('copy:static', function (){
   return gulp.src([
       SOURCES + '/favicon.ico'
     ])
@@ -236,22 +233,22 @@ gulp.task('lint:styles', function () {
   });
 
   gulp.task('watch:styles', function () {
-    gulp
+    return gulp
       .watch([
         SOURCES + '/styles/*.scss',
         SOURCES + '/styles/**/*.scss',
         SOURCES + '/sprites/*.png',
         SOURCES + '/icons/*.svg'
-      ], ['styles' /*, 'lint:styles' */])
+      ], gulp.series('styles' /*, 'lint:styles' */))
       .on('change', watcher_log_callback);
   });
 
   gulp.task('watch:markup', function () {
-     gulp
+     return gulp
       .watch([
         TARGET + '/index.html'
       ], function ()  {
-        gulp
+        return gulp
           .src(TARGET + '/index.html')
           .pipe(livereload());
       })
@@ -259,11 +256,11 @@ gulp.task('lint:styles', function () {
   });
 
   gulp.task('watch:scripts', function () {
-     gulp
+     return gulp
       .watch([
         SOURCES + '/scripts/*.js',
         SOURCES + '/scripts/**/*.js'
-      ], ['scripts', 'lint:scripts'])
+      ], gulp.series('scripts', 'lint:scripts'))
       .on('change', watcher_log_callback);
   });
 
@@ -299,3 +296,15 @@ function webpack_error_handler (err, stats, callback) {
 
   callback();
 }
+
+/*
+|--------------------------------------------------------------------------
+| TASK GROUPS (DEFINED AT END TO REFERENCE ALL TASKS)
+|--------------------------------------------------------------------------
+*/
+
+gulp.task('build',   gulp.series(gulp.parallel('clean:styles', 'clean:icons', 'clean:scripts', 'clean:static'), 'icons', gulp.parallel('styles', 'scripts', 'copy:static')));
+gulp.task('lint',    gulp.parallel('lint:scripts'/*, 'lint:styles'*/));
+gulp.task('watch',   gulp.parallel('watch:styles', 'watch:markup', 'watch:scripts', 'livereload'));
+gulp.task('dev',     gulp.series('build', gulp.parallel('watch', 'lint')));
+gulp.task('default', gulp.series('dev'));
