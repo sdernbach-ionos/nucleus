@@ -8,6 +8,7 @@ All dependencies have been successfully upgraded to their latest versions. The p
 - Gulp 4
 - Webpack 5
 - All other dependencies at latest stable versions
+- **Custom dependency-free grid system** replacing gridle
 
 ## Changes Made
 
@@ -17,6 +18,7 @@ All dependencies have been successfully upgraded to their latest versions. The p
 - Updated `webpack` from 1.x to 5.x
 - Updated `mocha`, `nyc` (replacing istanbul), and other dev dependencies
 - Updated all runtime dependencies (chalk, color, lorem-ipsum, etc.)
+- **Removed `gridle` dependency** - replaced with custom CSS-based grid system
 
 ### Code Fixes
 - Updated `Color.js` for new `color` package API
@@ -25,31 +27,36 @@ All dependencies have been successfully upgraded to their latest versions. The p
 - Created custom webpack 5 compatible template loader (tpl-loader is webpack 4 only)
 - Fixed Sass output style from "nested" to "expanded" (Dart Sass only supports "expanded" and "compressed")
 - Fixed icon template comments from `//` to `/* */` for CSS compatibility
+- **Replaced gridle with custom flexbox-based grid system** maintaining same class names and functionality
 
 ### Test Results
 - ✅ All 64 tests pass
 - ✅ Build completes successfully
 - ✅ Nucleus CLI generates styleguides successfully
 
-## Known Issue: Gridle Grid System
+## Grid System Replacement
 
-**Note:** The `gridle` grid system (v2.0.48) is incompatible with modern Dart Sass due to use of `@extend` across media queries, which is not allowed in Sass.
+The unmaintained `gridle` library (incompatible with modern Dart Sass) has been replaced with a custom, dependency-free CSS grid system in `assets/styles/nuclides/grid.scss`.
 
-### Workaround Applied
-The gridle import has been temporarily commented out in `assets/styles/app.scss`:
-```scss
-// @import "nuclides/grid";  // Temporarily disabled - gridle is incompatible with Dart Sass
+### Features
+- **Zero dependencies** - pure CSS/Sass implementation using flexbox
+- **Same class names** - fully compatible with existing markup (`SG-gr-*`, `SG-row`, etc.)
+- **Responsive** - supports mobile and tablet breakpoints
+- **12-column grid** - maintains the same 12-column layout with 20px gutters
+- **Text alignment utilities** - includes `.SG-txt-center`, `.SG-txt-right`, `.SG-txt-left`
+- **Responsive modifiers** - supports `@mobile` and `@tablet` variants
+
+### Class Examples
+```html
+<div class="SG-row">
+  <div class="SG-gr-6">Half width</div>
+  <div class="SG-gr-6">Half width</div>
+</div>
+
+<div class="SG-row">
+  <div class="SG-gr-12 SG-txt-center@mobile">Full width, centered on mobile</div>
+</div>
 ```
-
-### Impact
-The styleguide layout will not have the responsive grid classes. The core functionality of nucleus still works perfectly.
-
-### Recommendations for Future
-1. **Option 1:** Migrate to a modern CSS grid system (CSS Grid, Flexbox, or modern framework like Tailwind)
-2. **Option 2:** Fork and patch gridle to use mixins instead of extends
-3. **Option 3:** Use a different Sass-compatible grid library
-
-The gridle library appears to be unmaintained (last update 2016), so migration to a modern alternative is recommended.
 
 ## Security
 

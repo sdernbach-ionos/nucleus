@@ -58,7 +58,6 @@
     "clipboard": "^2.0.11",
     "consolidate": "^1.0.4",
     "del": "^6.1.1",
-    "gridle": "^2.0.48",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-consolidate": "^0.2.0",

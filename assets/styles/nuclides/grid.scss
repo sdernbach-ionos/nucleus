@@ -1,4 +1,4 @@
-// grid.scss -- Gridle setup
+// grid.scss -- Simple dependency-free grid system (replaces gridle)
 //
 // Copyright (C) 2016 Michael Seibt
 //
@@ -7,30 +7,78 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-@import "node_modules/gridle/sass/gridle/gridle";
-@include gridle_setup( (
-  context : 12,
-  gutter-width : 20px,
-  dir-attribute : false,
-  classes-prefix : "SG-"
-) );
-@include gridle_register_state ( mobile , (
-  max-width : 480px
-) );
-@include gridle_register_state ( tablet , (
-  min-width : 481px,
-  max-width : 1024px
-) ) ;
-@include gridle_generate_classes ( );
+// Grid configuration
+$grid-columns: 12;
+$grid-gutter: 20px;
 
-@include gridle_generate_custom_class( ("txt","-","center","@","%state") ) {
-  text-align: center;
+// Row container
+.SG-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -$grid-gutter / 2;
+  margin-right: -$grid-gutter / 2;
+  
+  &.SG-row-full {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
-@include gridle_generate_custom_class( ("txt","-","right","@","%state") ) {
-  text-align: right;
+// Grid columns
+@for $i from 1 through $grid-columns {
+  .SG-gr-#{$i} {
+    flex: 0 0 percentage($i / $grid-columns);
+    max-width: percentage($i / $grid-columns);
+    padding-left: $grid-gutter / 2;
+    padding-right: $grid-gutter / 2;
+    
+    &.SG-no-gutter,
+    &.SG-nogutter {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
-@include gridle_generate_custom_class( ("txt","-","left","@","%state") ) {
-  text-align: left;
+// Responsive breakpoints
+// Mobile (max-width: 480px)
+@media (max-width: 480px) {
+  @for $i from 1 through $grid-columns {
+    .SG-gr-#{$i}\@mobile {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+  
+  .SG-txt-center\@mobile { text-align: center; }
+  .SG-txt-right\@mobile { text-align: right; }
+  .SG-txt-left\@mobile { text-align: left; }
+}
+
+// Tablet (min-width: 481px, max-width: 1024px)
+@media (min-width: 481px) and (max-width: 1024px) {
+  @for $i from 1 through $grid-columns {
+    .SG-gr-#{$i}\@tablet {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+  
+  .SG-txt-center\@tablet { text-align: center; }
+  .SG-txt-right\@tablet { text-align: right; }
+  .SG-txt-left\@tablet { text-align: left; }
+}
+
+// Text alignment utilities
+.SG-txt-center { text-align: center; }
+.SG-txt-right { text-align: right; }
+.SG-txt-left { text-align: left; }
+
+// Additional utility classes for gridle compatibility
+.SG-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-gutter / 2;
+  padding-right: $grid-gutter / 2;
 }
