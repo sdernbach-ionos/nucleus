@@ -1,0 +1,46 @@
+// Custom dependency-free media query mixin
+// Replaces sass-mq with a simpler implementation
+
+@use 'breakpoints' as *;
+@use 'sass:map';
+
+// Media query mixin
+// Usage: @include mq($from: mobile) { ... }
+//        @include mq($until: tablet) { ... }
+//        @include mq($from: mobile, $until: desktop) { ... }
+@mixin mq($from: null, $until: null) {
+  $min-width: null;
+  $max-width: null;
+
+  @if $from {
+    @if map.has-key($nucleus-breakpoints, $from) {
+      $min-width: map.get($nucleus-breakpoints, $from);
+    } @else {
+      @error "Breakpoint '#{$from}' not found in $nucleus-breakpoints";
+    }
+  }
+
+  @if $until {
+    @if map.has-key($nucleus-breakpoints, $until) {
+      $max-width: map.get($nucleus-breakpoints, $until) - 1px;
+    } @else {
+      @error "Breakpoint '#{$until}' not found in $nucleus-breakpoints";
+    }
+  }
+
+  @if $min-width and $max-width {
+    @media (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else if $min-width {
+    @media (min-width: $min-width) {
+      @content;
+    }
+  } @else if $max-width {
+    @media (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @error "mq() requires at least one of $from or $until parameters";
+  }
+}

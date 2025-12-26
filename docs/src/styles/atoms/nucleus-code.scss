@@ -1,10 +1,8 @@
 @use "../../../../assets/styles/nuclides/colors";
 @use "../../../../assets/styles/nuclides/fonts";
 
-@use "sass:meta";
-
 .hero {
-  @include meta.load-css("prismjs/themes/prism-okaidia.css");
+  @import "prismjs/themes/prism-okaidia.css";
 }
 
 .hero .code {
