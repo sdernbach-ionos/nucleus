@@ -185,6 +185,7 @@ gulp.task('build:styles', function () {
       precision: 6,
       includePaths: [
         __dirname + '/../node_modules',
+        __dirname + '/../node_modules/sass-mq',
         __dirname + '/../assets/styles'
       ],
       outputStyle: config.production ? 'compressed' : 'expanded'

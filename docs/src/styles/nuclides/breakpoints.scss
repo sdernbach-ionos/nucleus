@@ -7,7 +7,7 @@ $nucleus-breakpoints: (
         wide:    1300px,
 );
 
-@use 'sass-mq' as * with (
+@use 'mq' as * with (
         $breakpoints: $nucleus-breakpoints
 );
 

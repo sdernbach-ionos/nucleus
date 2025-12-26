@@ -1,6 +1,6 @@
 @use "../../../../assets/styles/nuclides/colors";
 @use "../nuclides/breakpoints";
-@use 'sass-mq/mq' as *;
+@use 'mq' as *;
 
 /**
  * OS X window mockup. Fits well with the split-pane for the landing page - as
