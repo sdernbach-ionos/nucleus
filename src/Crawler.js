@@ -1,4 +1,3 @@
-import fs from 'fs';
 /* Crawler.js -- Scans the PostCSS tree for relevant annotation blocks
  *
  * Copyright (C) 2016 Michael Seibt
@@ -10,8 +9,7 @@ import fs from 'fs';
  * of the MIT license. See the LICENSE file for details.
  */
 
-
-
+import fs from 'fs';
 import Verbose from './Verbose.js';
 import postcss from 'postcss';
 import syntax from 'postcss-scss';
