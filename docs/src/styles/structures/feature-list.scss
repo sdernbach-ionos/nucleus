@@ -1,5 +1,6 @@
 @use "../../../../assets/styles/nuclides/tools";
 @use "../nuclides/breakpoints";
+@use 'sass-mq/mq' as *;
 
 /**
  * @structure Feature list
@@ -25,11 +26,11 @@
       margin-right: 1%;
     }
 
-    @include breakpoints.mq($until: mobile) {
+    @include mq($until: mobile) {
       width: 100%;
     }
 
-    @include breakpoints.mq($from: mobile, $until: tablet) {
+    @include mq($from: mobile, $until: tablet) {
       width: 50%;
     }
   }

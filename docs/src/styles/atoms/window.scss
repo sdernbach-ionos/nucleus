@@ -1,5 +1,6 @@
 @use "../../../../assets/styles/nuclides/colors";
 @use "../nuclides/breakpoints";
+@use 'sass-mq/mq' as *;
 
 /**
  * OS X window mockup. Fits well with the split-pane for the landing page - as
@@ -95,18 +96,18 @@
     box-shadow: 30px 0 30px 0 rgba(45, 45, 45, 0.6);
   }
 
-  @include breakpoints.mq($until: tabletPortrait) {
+  @include mq($until: tabletPortrait) {
     height: 350px;
   }
 
-  @include breakpoints.mq($until: mobile) {
+  @include mq($until: mobile) {
     height: 250px;
     .split-pane__code {
       font-size: 12px;
     }
   }
 
-  @include breakpoints.mq($until: tiny) {
+  @include mq($until: tiny) {
     .split-pane__code {
       font-size: 12px;
       padding-left: 20%;

@@ -11,6 +11,7 @@ $icon-home: x y offset_x offset_y width height total_width total_height image_pa
 At the bottom of this section, we provide information about the spritesheet itself
 $spritesheet: width height image $spritesheet-sprites;
 */
+@use 'sass:list';
 $logo-hp-name: "logo-hp";
 $logo-hp-x: 0px;
 $logo-hp-y: 42px;
@@ -89,21 +90,21 @@ The provided mixins are intended to be used with the array-like variables
 }
 */
 @mixin sprite-width($sprite) {
-  width: nth($sprite, 5);
+  width: list.nth($sprite, 5);
 }
 
 @mixin sprite-height($sprite) {
-  height: nth($sprite, 6);
+  height: list.nth($sprite, 6);
 }
 
 @mixin sprite-position($sprite) {
-  $sprite-offset-x: nth($sprite, 3);
-  $sprite-offset-y: nth($sprite, 4);
+  $sprite-offset-x: list.nth($sprite, 3);
+  $sprite-offset-y: list.nth($sprite, 4);
   background-position: $sprite-offset-x  $sprite-offset-y;
 }
 
 @mixin sprite-image($sprite) {
-  $sprite-image: nth($sprite, 9);
+  $sprite-image: list.nth($sprite, 9);
   background-image: url('#{$sprite-image}');
 }
 
@@ -127,14 +128,14 @@ $icon-home-group: ("icon-home", $icon-home, $icon-home-2x, );
 }
 */
 @mixin sprite-background-size($sprite) {
-  $sprite-total-width: nth($sprite, 7);
-  $sprite-total-height: nth($sprite, 8);
+  $sprite-total-width: list.nth($sprite, 7);
+  $sprite-total-height: list.nth($sprite, 8);
   background-size: $sprite-total-width $sprite-total-height;
 }
 
 @mixin retina-sprite($retina-group) {
-  $normal-sprite: nth($retina-group, 2);
-  $retina-sprite: nth($retina-group, 3);
+  $normal-sprite: list.nth($retina-group, 2);
+  $retina-sprite: list.nth($retina-group, 3);
   @include sprite($normal-sprite);
 
   @media (-webkit-min-device-pixel-ratio: 2),
@@ -144,8 +145,8 @@ $icon-home-group: ("icon-home", $icon-home, $icon-home-2x, );
   }
 }
 @mixin retina-sprite-hover($retina-group) {
-  $normal-sprite: nth($retina-group, 2);
-  $retina-sprite: nth($retina-group, 3);
+  $normal-sprite: list.nth($retina-group, 2);
+  $retina-sprite: list.nth($retina-group, 3);
   @include sprite-position($normal-sprite);
 
   @media (-webkit-min-device-pixel-ratio: 2),
@@ -162,7 +163,7 @@ The `sprites` mixin generates identical output to the CSS template
 */
 @mixin sprites($sprites) {
   @each $sprite in $sprites {
-    $sprite-name: nth($sprite, 10);
+    $sprite-name: list.nth($sprite, 10);
     .#{$sprite-name} {
       @include sprite($sprite);
     }
@@ -177,7 +178,7 @@ The `retina-sprites` mixin generates a CSS rule and media query for retina group
 */
 @mixin retina-sprites($retina-groups) {
   @each $retina-group in $retina-groups {
-    $sprite-name: nth($retina-group, 1);
+    $sprite-name: list.nth($retina-group, 1);
     .#{$sprite-name} {
       @include retina-sprite($retina-group);
     }

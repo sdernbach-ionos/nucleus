@@ -1,8 +1,9 @@
 @use "../nuclides/breakpoints";
+@use 'sass-mq/mq' as *;
 
 .SG-layout--two-columns {
 
-  @include breakpoints.mq($until: tablet) {
+  @include mq($until: tablet) {
     .SG-layout__sidebar, .SG-layout__content {
       float: none;
       width: 100%;
