@@ -1,9 +1,3 @@
-/* global describe */
-/* global it */
-
-
-
-import assert from 'assert';
 import Helpers from './helpers.js';
 import Verbose from '../src/Verbose.js';
 import Mixin from '../src/entities/Mixin.js';
@@ -14,9 +8,9 @@ describe('Mixin', function() {
     Helpers.hook(Verbose, 'log');
 
     var m = new Mixin({});
-    assert.deepEqual(m, {});
+    expect(m).toEqual({});
 
-    assert.ok(Helpers.logCalled >= 1);
+    expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
   });
 
   /********************************************************/
@@ -35,7 +29,7 @@ describe('Mixin', function() {
       }
     });
 
-    assert.deepEqual(m.parameters, [{
+    expect(m.parameters).toEqual([{
       name: 'param1',
       optional: false,
       description: 'The first parameter'
@@ -55,7 +49,7 @@ describe('Mixin', function() {
       }
     });
 
-    assert.deepEqual(m.parameters, [{
+    expect(m.parameters).toEqual([{
       name: 'param1',
       optional: false,
       description: 'The only parameter'

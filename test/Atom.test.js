@@ -1,9 +1,3 @@
-/* global describe */
-/* global it */
-
-
-
-import assert from 'assert';
 import Atom from '../src/entities/Atom.js';
 import Helpers from './helpers.js';
 import Verbose from '../src/Verbose.js';
@@ -14,9 +8,9 @@ describe('Atom', function() {
     Helpers.hook(Verbose, 'log');
 
     var a = new Atom({});
-    assert.deepEqual(a, {});
+    expect(a).toEqual({});
 
-    assert.ok(Helpers.logCalled >= 1);
+    expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
   });
 
   /********************************************************/
@@ -34,7 +28,7 @@ describe('Atom', function() {
       }
     });
 
-    assert.deepEqual(a, {
+    expect(a).toEqual({
         name: 'Test-Component',
         type: 'atom',
         hash: '47edcec9fa48df43335b12fc0e3e1cc9a4709bf1',
@@ -65,7 +59,7 @@ describe('Atom', function() {
       }
     });
 
-    assert.deepEqual(a, {
+    expect(a).toEqual({
         name: 'Test-Component',
         type: 'atom',
         hash: '1af43675b26c728f36bb88af3dcabdc7c0dc9a35',

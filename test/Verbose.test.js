@@ -1,9 +1,3 @@
-/* global describe */
-/* global it */
-
-
-
-import assert from 'assert';
 import Helpers from './helpers.js';
 import Verbose from '../src/Verbose.js';
 
@@ -15,7 +9,7 @@ describe('Verbose', function() {
       Helpers.hook(Verbose, 'log');
       Verbose.setLevel(Verbose.LEVELS.SILENT);
       Verbose.error("test", []);
-      assert.equal(Helpers.logCalled, 0);
+      expect(Helpers.logCalled).toBe(0);
     });
 
   });

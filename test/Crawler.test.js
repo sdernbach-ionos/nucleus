@@ -1,9 +1,3 @@
-/* global describe */
-/* global it */
-
-
-
-import assert from 'assert';
 import Helpers from './helpers.js';
 import Verbose from '../src/Verbose.js';
 import Crawler from '../src/Crawler.js';
@@ -14,15 +8,15 @@ describe('Crawler', function() {
 
   describe('#isAnnotationLine', function () {
     it('should recognize a default annotation line', function () {
-      assert.equal(Crawler.isAnnotationLine("@test"), true);
+      expect(Crawler.isAnnotationLine("@test")).toBe(true);
     });
 
     it('should not recognize an invalid annotation line', function () {
-      assert.equal(Crawler.isAnnotationLine("test"), false);
+      expect(Crawler.isAnnotationLine("test")).toBe(false);
     });
 
     it('should not recognize a content line as annotation', function () {
-      assert.equal(Crawler.isAnnotationLine(" test"), false);
+      expect(Crawler.isAnnotationLine(" test")).toBe(false);
     });
   });
 
@@ -31,8 +25,8 @@ describe('Crawler', function() {
   describe('#nextNode', function () {
     it('should return the next element from a set and remove it', function () {
       var set = [1,2];
-      assert.equal(Crawler.nextNode(set), 1);
-      assert.equal(set.length, 1);
+      expect(Crawler.nextNode(set)).toBe(1);
+      expect(set.length).toBe(1);
     });
     it('should throw an error on empty sets', function () {
       var set = [];
@@ -42,8 +36,8 @@ describe('Crawler', function() {
 
       Crawler.nextNode(set);
 
-      assert.equal(Helpers.logCalled, 2);
-      assert.equal(Helpers.exitCalled, 1);
+      expect(Helpers.logCalled).toBe(2);
+      expect(Helpers.exitCalled).toBe(1);
     });
   });
 
@@ -51,31 +45,31 @@ describe('Crawler', function() {
 
   describe('#isDocBlock', function () {
     it('should return false if not input was passed', function () {
-      assert.equal(Crawler.isDocBlock(), false);
+      expect(Crawler.isDocBlock()).toBe(false);
     });
 
     it('should not detect single starred comments as DocBlock', function () {
-      assert.equal(Crawler.isDocBlock("@test"), false);
+      expect(Crawler.isDocBlock("@test")).toBe(false);
     });
 
     it('should not detect single starred comments with value as DocBlock', function () {
-      assert.equal(Crawler.isDocBlock("@test value"), false);
+      expect(Crawler.isDocBlock("@test value")).toBe(false);
     });
 
     it('should detect single line comments as DocBlock', function () {
-      assert.equal(Crawler.isDocBlock("* @test"), true);
+      expect(Crawler.isDocBlock("* @test")).toBe(true);
     });
 
     it('should detect single line comments with value as DocBlock', function () {
-      assert.equal(Crawler.isDocBlock("* @test value"), true);
+      expect(Crawler.isDocBlock("* @test value")).toBe(true);
     });
 
     it('should detect multiline DocBlocks', function () {
-      assert.equal(Crawler.isDocBlock("*\n * @test"), true);
+      expect(Crawler.isDocBlock("*\n * @test")).toBe(true);
     });
 
     it('should detect multiline DocBlocks with Windows EOLs', function () {
-      assert.equal(Crawler.isDocBlock("*\r\n * @test"), true);
+      expect(Crawler.isDocBlock("*\r\n * @test")).toBe(true);
     });
   });
 
@@ -83,45 +77,27 @@ describe('Crawler', function() {
 
   describe('#getAnnotation', function () {
     it('should parse an annotation without value', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation("@test"),
-        {key: 'test', value: true}
-      );
+      expect(Crawler.getAnnotation("@test")).toEqual({key: 'test', value: true});
     });
 
     it('should parse an annotation with value', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation("@test abc"),
-        {key: 'test', value: 'abc'}
-      );
+      expect(Crawler.getAnnotation("@test abc")).toEqual({key: 'test', value: 'abc'});
     });
 
     it('should parse an annotation with HTML value', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation("@test <div></div>"),
-        {key: 'test', value: '<div></div>'}
-      );
+      expect(Crawler.getAnnotation("@test <div></div>")).toEqual({key: 'test', value: '<div></div>'});
     });
 
     it('should return multiline content', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation(" <div> </div> "),
-        {value: '<div> </div> ', type: 'content'}
-      );
+      expect(Crawler.getAnnotation(" <div> </div> ")).toEqual({value: '<div> </div> ', type: 'content'});
     });
 
     it('should return multiline content indented with tabs', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation("\t<div> </div> "),
-        {value: '<div> </div> ', type: 'content'}
-      );
+      expect(Crawler.getAnnotation("\t<div> </div> ")).toEqual({value: '<div> </div> ', type: 'content'});
     });
 
     it('should return false is no annotation line', function () {
-      assert.deepEqual(
-        Crawler.getAnnotation("Whatever i am"),
-        false
-      );
+      expect(Crawler.getAnnotation("Whatever i am")).toBe(false);
     });
   });
 
@@ -129,43 +105,40 @@ describe('Crawler', function() {
 
   describe('#removeCommentChars', function () {
     it('should remove single line DocBlock star', function () {
-      assert.equal(Crawler.removeCommentChars('* @test'), '@test');
+      expect(Crawler.removeCommentChars('* @test')).toBe('@test');
     });
     it('should remove single line trailing spaces', function () {
-      assert.equal(Crawler.removeCommentChars('* @test '), '@test');
+      expect(Crawler.removeCommentChars('* @test ')).toBe('@test');
     });
     it('should remove single line DocBlock star', function () {
-      assert.equal(Crawler.removeCommentChars('* @test'), '@test');
+      expect(Crawler.removeCommentChars('* @test')).toBe('@test');
     });
     it('should remove multi line DocBlock stars', function () {
-      assert.equal(Crawler.removeCommentChars('*\n * @test'), '@test');
+      expect(Crawler.removeCommentChars('*\n * @test')).toBe('@test');
     });
     it('should remove multi line DocBlock stars for multiple annotations', function () {
-      assert.equal(Crawler.removeCommentChars('*\n * @test\n * @test2'), '@test\n@test2');
+      expect(Crawler.removeCommentChars('*\n * @test\n * @test2')).toBe('@test\n@test2');
     });
     it('should remove multi line DocBlock stars for multiple annotations in indented blocks', function () {
-      assert.equal(Crawler.removeCommentChars(
+      expect(Crawler.removeCommentChars(
         '   *\n'+
         '    * @test\n'+
         '    * @test2'
-      ), '\n@test\n@test2');
+      )).toBe('\n@test\n@test2');
     });
     it('should remove multi line DocBlock stars for multiple annotations and values', function () {
-      assert.equal(Crawler.removeCommentChars('*\n * @test 111\n * @test2 222'), '@test 111\n@test2 222');
+      expect(Crawler.removeCommentChars('*\n * @test 111\n * @test2 222')).toBe('@test 111\n@test2 222');
     });
     it('should remove multi line DocBlock stars for multiple annotations and some values', function () {
-      assert.equal(Crawler.removeCommentChars('*\n * @test 111\n * @test2 '), '@test 111\n@test2');
+      expect(Crawler.removeCommentChars('*\n * @test 111\n * @test2 ')).toBe('@test 111\n@test2');
     });
     it('should remove multi line DocBlock stars for multiple annotations and description', function () {
-      assert.equal(
-        Crawler.removeCommentChars(
+      expect(Crawler.removeCommentChars(
           '*\n'+
           ' * Desc  \n'+
           ' * \n'+
           ' * @test 111\n'+
-          ' * @test2 222'),
-        'Desc\n\n@test 111\n@test2 222'
-      );
+          ' * @test2 222')).toBe('Desc\n\n@test 111\n@test2 222');
     });
   });
 
@@ -174,18 +147,18 @@ describe('Crawler', function() {
   describe('#getDescription', function () {
     it('Should return a description if one is present', function () {
       var lines = 'Description line 1\nand two.\n@test'.split('\n');
-      assert.equal(Crawler.getDescription(lines), 'Description line 1 and two.');
+      expect(Crawler.getDescription(lines)).toBe('Description line 1 and two.');
     });
 
     it('Should remove description lines from the input array', function () {
       var lines = 'Description line 1\nand two.\n@test'.split('\n');
       Crawler.getDescription(lines);
-      assert.equal(JSON.stringify(lines), '["@test"]');
+      expect(JSON.stringify(lines)).toBe('["@test"]');
     });
 
     it('Should return false if no description is present', function () {
       var lines = '@test1\n@test'.split('\n');
-      assert.equal(Crawler.getDescription(lines), false);
+      expect(Crawler.getDescription(lines)).toBe(false);
     });
   });
 
@@ -195,69 +168,55 @@ describe('Crawler', function() {
     it('should add a new annotation', function () {
       var annotation = {key: 'test', value: true};
       var annotations = {};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations)),
-        JSON.stringify({'test' : true})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations))).toBe(JSON.stringify({'test' : true}));
     });
 
     it('should add a new annotation with value', function () {
       var annotation = {key: 'test', value: 'okay'};
       var annotations = {};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations)),
-        JSON.stringify({'test' : 'okay'})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations))).toBe(JSON.stringify({'test' : 'okay'}));
     });
 
     it('should add a to an existing annotation', function () {
       var annotation = {key: 'test', value: 'okay'};
       var annotations = {'test' : 'first'};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations)),
-        JSON.stringify({'test' : ['first', 'okay']})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations))).toBe(JSON.stringify({'test' : ['first', 'okay']}));
     });
 
     it('should add a single-line value to an existing set of annotation values', function () {
       var annotation = {key: 'test', value: 'okay'};
       var annotations = {'test' : ['first', 'second']};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test')),
-        JSON.stringify({'test' : ['first', 'second', 'okay']})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test'))).toBe(JSON.stringify({'test' : ['first', 'second', 'okay']}));
     });
 
     it('should add new multiline content to precessor', function () {
       var annotation = {type: 'content', value: 'okay'};
       var annotations = {};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test')),
-        JSON.stringify({'test' : 'okay'})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test'))).toBe(JSON.stringify({'test' : 'okay'}));
     });
 
     it('should add multiline content to existing precessor', function () {
       var annotation = {type: 'content', value: 'okay'};
       var annotations = {'test' : true};
-      assert.deepEqual(
-        Crawler.addAnnotationByType(annotation, annotations, 'test'),
-        {'test' : 'okay'}
-      );
+      expect(Crawler.addAnnotationByType(annotation, annotations, 'test')).toEqual({'test' : 'okay'});
 
-      assert.deepEqual(
-        Crawler.addAnnotationByType(annotation, annotations, 'test'),
-        {'test' : 'okay\nokay'}
-      );
+      expect(Crawler.addAnnotationByType(annotation, annotations, 'test')).toEqual({'test' : 'okay\nokay'});
+    });
+
+    it('should not add multiline content to existing precessor if it does not exist', function () {
+      Helpers.hook(Verbose, 'log');
+
+      var annotation = {type: 'content', value: 'okay'};
+      var annotations = {'another' : true};
+      Crawler.addAnnotationByType(annotation, annotations, 'test');
+
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
     });
 
     it('should add a multi-line value to an existing set of annotation values', function () {
       var annotation = {type: 'content', value: 'okay'};
       var annotations = {'test' : ['first', 'second']};
-      assert.equal(
-        JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test')),
-        JSON.stringify({'test' : ['first', 'second\nokay']})
-      );
+      expect(JSON.stringify(Crawler.addAnnotationByType(annotation, annotations, 'test'))).toBe(JSON.stringify({'test' : ['first', 'second\nokay']}));
     });
 
     it('should throw an error if no last annotation was given', function () {
@@ -269,8 +228,8 @@ describe('Crawler', function() {
 
       Crawler.addAnnotationByType(annotation, annotations, null);
 
-      assert.equal(Helpers.logCalled, 1);
-      assert.equal(Helpers.exitCalled, 0);
+      expect(Helpers.logCalled).toBe(1);
+      expect(Helpers.exitCalled).toBe(0);
     });
   });
 

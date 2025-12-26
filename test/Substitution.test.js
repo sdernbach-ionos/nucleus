@@ -1,9 +1,3 @@
-/* global describe */
-/* global it */
-
-
-
-import assert from 'assert';
 import Helpers from './helpers.js';
 import Verbose from '../src/Verbose.js';
 import Substitute from '../src/Substitute.js';
@@ -13,7 +7,7 @@ describe('Substitution', function () {
   it('complains about invalid shortcodes', function () {
     Helpers.hook(Verbose, 'log');
     Substitute.substitute('@{lipsums}');
-    assert.ok(Helpers.logCalled >= 1);
+    expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
   });
 
   /********************************************************/
@@ -28,8 +22,8 @@ describe('Substitution', function () {
     var markup = 'Test @{image:300:300}';
     var subs = Substitute.substitute(markup);
 
-    assert.ok(subs.indexOf('Test') === 0);
-    assert.ok(subs.indexOf('https://unsplash.it/') !== -1);
+    expect(subs.indexOf('Test')).toBe(0);
+    expect(subs.indexOf('https://unsplash.it/')).not.toBe(-1);
 
   });
 
@@ -39,21 +33,21 @@ describe('Substitution', function () {
     var markup = 'Test @{lipsum:1:words}';
     var subs = Substitute.substitute(markup);
 
-    assert.ok(subs.indexOf('Test') === 0);
-    assert.ok(subs.indexOf('{lipsum') === -1);
+    expect(subs.indexOf('Test')).toBe(0);
+    expect(subs.indexOf('{lipsum')).toBe(-1);
 
     markup = 'Test @{lipsum:1:letter}';
     subs = Substitute.substitute(markup);
-    assert.ok(subs.indexOf('Test') === 0);
-    assert.ok(subs.indexOf('{lipsum') === -1);
+    expect(subs.indexOf('Test')).toBe(0);
+    expect(subs.indexOf('{lipsum')).toBe(-1);
 
     markup = '@{lipsum:1:words}';
     subs = Substitute.substitute(markup);
-    assert.ok(subs.split(' ').length === 1);
+    expect(subs.split(' ').length).toBe(1);
 
     markup = '@{lipsum:3:words}';
     subs = Substitute.substitute(markup);
-    assert.ok(subs.split(' ').length === 3);
+    expect(subs.split(' ').length).toBe(3);
 
   });
 });
