@@ -29,9 +29,9 @@ const require = createRequire(import.meta.url);
 import gulp from 'gulp';
 import path from 'path';                  // Path utilities
 import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
-import sass from 'sass';                  // Dart Sass compiler
+import * as sass from 'sass';                  // Dart Sass compiler
 import pug from 'gulp-pug';              // Thin layer for Pug
-var rename       = require("gulp-rename");           // Renames a set of files
+import rename from "gulp-rename";           // Renames a set of files
 import iconfont from 'gulp-iconfont';         // Generates an icon-font
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes

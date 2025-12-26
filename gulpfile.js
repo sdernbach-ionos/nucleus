@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'url';
+import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,21 +26,21 @@ const __dirname = dirname(__filename);
 
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
-import sass from 'sass';                  // Dart Sass compiler
+import * as sass from 'sass';                  // Dart Sass compiler
 import webpack from 'webpack';               // Used for Javascript packing
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import gutil from 'gulp-util';             // Utility toolbox
 import { deleteAsync } from 'del';               // Removes a set of files
 import iconfont from 'gulp-iconfont';         // Generates an icon-font
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
-var rename      = require("gulp-rename");           // Renames a set of files
+import rename from "gulp-rename";           // Renames a set of files
 import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
 import jshint from 'gulp-jshint';           // Hints JavaScript
 import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
-var postcss     = require("gulp-postcss");          // Parse style sheet files
-var reporter    = require("postcss-reporter");      // Reporter for PostCSS
-var stylelint   = require("stylelint");             // Lints styles according to a ruleset
-var scss        = require("postcss-scss");          // SCSS syntax for PostCSS
+import postcss from "gulp-postcss";          // Parse style sheet files
+import reporter from "postcss-reporter";      // Reporter for PostCSS
+import stylelint from "stylelint";             // Lints styles according to a ruleset
+import scss from "postcss-scss";          // SCSS syntax for PostCSS
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 
 // Configure gulp-sass to use Dart Sass
@@ -163,7 +163,7 @@ gulp.task('clean:static', function () {
       },
       module: {
         rules: [
-          { test: /\.html$/, loader: require.resolve('./webpack-tpl-loader.js') }
+          { test: /\.html$/, loader: fileURLToPath(new URL('./webpack-tpl-loader.js', import.meta.url)) }
         ]
       },
       resolve: {
