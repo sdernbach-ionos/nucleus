@@ -1,3 +1,8 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 /* gulpfile.js -- Builds the assets for the style guide.
  *
  * Copyright (C) 2016 Michael Seibt
@@ -11,7 +16,7 @@
 /* global process */
 /* global __dirname */
 
-'use strict';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,24 +24,24 @@
 |--------------------------------------------------------------------------
 */
 
-var gulp        = require('gulp');
-var gulpSass    = require('gulp-sass');             // Transpiles SASS to CSS
-var sass        = require('sass');                  // Dart Sass compiler
-var webpack     = require('webpack');               // Used for Javascript packing
-var livereload  = require('gulp-livereload');       // Reloads the browser window after changes
-var gutil       = require('gulp-util');             // Utility toolbox
-var { deleteAsync } = require('del');               // Removes a set of files
-var iconfont    = require('gulp-iconfont');         // Generates an icon-font
-var consolidate = require('gulp-consolidate');      // Passes a file to a template engine
+import gulp from 'gulp';
+import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
+import sass from 'sass';                  // Dart Sass compiler
+import webpack from 'webpack';               // Used for Javascript packing
+import livereload from 'gulp-livereload';       // Reloads the browser window after changes
+import gutil from 'gulp-util';             // Utility toolbox
+import { deleteAsync } from 'del';               // Removes a set of files
+import iconfont from 'gulp-iconfont';         // Generates an icon-font
+import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 var rename      = require("gulp-rename");           // Renames a set of files
-var logwarn     = require('gulp-logwarn');          // Warns on leftover debug code
-var jshint      = require('gulp-jshint');           // Hints JavaScript
-var copy        = require('gulp-copy');             // Copies files (ignores path prefixes)
+import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
+import jshint from 'gulp-jshint';           // Hints JavaScript
+import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
 var postcss     = require("gulp-postcss");          // Parse style sheet files
 var reporter    = require("postcss-reporter");      // Reporter for PostCSS
 var stylelint   = require("stylelint");             // Lints styles according to a ruleset
 var scss        = require("postcss-scss");          // SCSS syntax for PostCSS
-var plumber     = require('gulp-plumber');          // Catches gulp errors and prevents exit
+import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 
 // Configure gulp-sass to use Dart Sass
 var sassCompiler = gulpSass(sass);

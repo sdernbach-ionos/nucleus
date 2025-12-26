@@ -1,3 +1,10 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { createRequire } from 'module';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
 /* gulpfile.js -- Builds the assets for the style guide documentation pages
  *
  * Copyright (C) 2016 Michael Seibt
@@ -11,7 +18,7 @@
 /* global process */
 /* global __dirname */
 
-'use strict';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,25 +26,25 @@
 |--------------------------------------------------------------------------
 */
 
-var gulp         = require('gulp');
-var path         = require('path');                  // Path utilities
-var gulpSass     = require('gulp-sass');             // Transpiles SASS to CSS
-var sass         = require('sass');                  // Dart Sass compiler
-var pug          = require('gulp-pug');              // Thin layer for Pug
+import gulp from 'gulp';
+import path from 'path';                  // Path utilities
+import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
+import sass from 'sass';                  // Dart Sass compiler
+import pug from 'gulp-pug';              // Thin layer for Pug
 var rename       = require("gulp-rename");           // Renames a set of files
-var iconfont     = require('gulp-iconfont');         // Generates an icon-font
-var consolidate  = require('gulp-consolidate');      // Passes a file to a template engine
-var livereload   = require('gulp-livereload');       // Reloads the browser window after changes
-var gutil        = require('gulp-util');             // Utility toolbox
-var hashFiles    = require('hash-files');            // Hashes a set of files
-var plumber      = require('gulp-plumber');          // Catches gulp errors and prevents exit
-var imagemin     = require('gulp-imagemin');         // Optimizes images
-var merge        = require('merge-stream');          // Merges two streams
-var spritesmith  = require('gulp.spritesmith');      // Generates a spritesheet
-var buffer       = require('vinyl-buffer');          // Creates a vinyl file buffer
-var autoprefixer = require('gulp-autoprefixer');     // Adds prefixes to css properties if needed
-var { deleteAsync } = require('del');                // Removes a set of files
-var webpack      = require('webpack');               // Used for Javascript packing
+import iconfont from 'gulp-iconfont';         // Generates an icon-font
+import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
+import livereload from 'gulp-livereload';       // Reloads the browser window after changes
+import gutil from 'gulp-util';             // Utility toolbox
+import hashFiles from 'hash-files';            // Hashes a set of files
+import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
+import imagemin from 'gulp-imagemin';         // Optimizes images
+import merge from 'merge-stream';          // Merges two streams
+import spritesmith from 'gulp.spritesmith';      // Generates a spritesheet
+import buffer from 'vinyl-buffer';          // Creates a vinyl file buffer
+import autoprefixer from 'gulp-autoprefixer';     // Adds prefixes to css properties if needed
+import { deleteAsync } from 'del';                // Removes a set of files
+import webpack from 'webpack';               // Used for Javascript packing
 
 // Configure gulp-sass to use Dart Sass
 var sassCompiler = gulpSass(sass);
