@@ -8,7 +8,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
+
 
 var SearchIndex = {
   index: []
@@ -55,4 +55,4 @@ SearchIndex.createElementIndex = function ( elements ) {
   return elementIndex;
 };
 
-module.exports = SearchIndex;
+export default SearchIndex;

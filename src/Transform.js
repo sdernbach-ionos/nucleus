@@ -9,18 +9,18 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Verbose = require('./Verbose');
-var Nuclide = require('./entities/Nuclide');
-var Color = require('./entities/Color');
-var Mixin = require('./entities/Mixin');
-var Atom = require('./entities/Atom');
-var Icon = require('./entities/Icon');
-var Molecule = require('./entities/Molecule');
-var Structure = require('./entities/Structure');
 
-var Dot = require('dot-object');
+import Verbose from './Verbose.js';
+import Nuclide from './entities/Nuclide.js';
+import Color from './entities/Color.js';
+import Mixin from './entities/Mixin.js';
+import Atom from './entities/Atom.js';
+import Icon from './entities/Icon.js';
+import Molecule from './entities/Molecule.js';
+import Structure from './entities/Structure.js';
+
+import Dot from 'dot-object';
 
 var Transform = {};
 
@@ -140,4 +140,4 @@ Transform.createEntity = function(style) {
   return false;
 };
 
-module.exports = Transform;
+export default Transform;

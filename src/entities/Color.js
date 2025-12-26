@@ -9,10 +9,10 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
-var ColorConverter = require('color');
+
+import Entity from './Entity.js';
+import ColorConverter from 'color';
 
 var Color = function(raw) {
   // Call parent constructor
@@ -53,4 +53,4 @@ var Color = function(raw) {
 
 Color.prototype = Object.create(Entity.prototype);
 
-module.exports = Color;
+export default Color;

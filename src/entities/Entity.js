@@ -9,10 +9,10 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Verbose = require('../Verbose');
-var hash = require('json-hash');
+
+import Verbose from '../Verbose.js';
+import hash from 'json-hash';
 
 var Entity = function(raw) {
   this.raw = raw;
@@ -153,4 +153,4 @@ Entity.prototype.hash = function() {
   return hash.digest(this.raw.annotations);
 };
 
-module.exports = Entity;
+export default Entity;

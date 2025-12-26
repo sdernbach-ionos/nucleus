@@ -8,9 +8,9 @@
  * This software may be modified and distributed under the terms
  * of the MIT license. See the LICENSE file for details.
  */
-'use strict';
 
-var Entity = require('./Entity');
+
+import Entity from './Entity.js';
 
 var Molecule = function(raw) {
   // Call parent constructor
@@ -48,4 +48,4 @@ Molecule.prototype.getName = function() {
   return this.raw.annotations.molecule;
 };
 
-module.exports = Molecule;
+export default Molecule;

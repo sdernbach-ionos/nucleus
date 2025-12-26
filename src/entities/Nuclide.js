@@ -8,9 +8,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
+
+import Entity from './Entity.js';
 
 var Nuclide = function(raw) {
   // Call parent constructor
@@ -43,4 +43,4 @@ var Nuclide = function(raw) {
 
 Nuclide.prototype = Object.create(Entity.prototype);
 
-module.exports = Nuclide;
+export default Nuclide;

@@ -9,11 +9,11 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Verbose = require('./Verbose');
-var postcss = require('postcss');
-var syntax = require('postcss-scss');
+
+import Verbose from './Verbose.js';
+import postcss from 'postcss';
+import syntax from 'postcss-scss';
 
 var Crawler = {};
 
@@ -253,4 +253,4 @@ Crawler.addAnnotationByType = function (annotation, annotations, lastAnnotationK
   return annotations;
 };
 
-module.exports = Crawler;
+export default Crawler;

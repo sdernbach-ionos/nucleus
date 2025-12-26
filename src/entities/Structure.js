@@ -8,9 +8,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
+
+import Entity from './Entity.js';
 
 var Structure = function(raw) {
   // Call parent constructor
@@ -63,4 +63,4 @@ Structure.prototype.getFlags = function() {
 };
 
 
-module.exports = Structure;
+export default Structure;

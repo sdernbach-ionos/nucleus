@@ -9,10 +9,10 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var _ = require('lodash');
-var Verbose = require('./Verbose');
+
+import _ from 'lodash';
+import Verbose from './Verbose.js';
 
 var Substitute = {
   map: {},
@@ -119,4 +119,4 @@ Substitute.methods.image = function (width, height) {
   }
 };
 
-module.exports = Substitute;
+export default Substitute;

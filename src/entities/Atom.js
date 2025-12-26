@@ -9,9 +9,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
+
+import Entity from './Entity.js';
 
 var Atom = function (raw) {
   // Call parent constructor
@@ -42,4 +42,4 @@ var Atom = function (raw) {
 
 Atom.prototype = Object.create(Entity.prototype);
 
-module.exports = Atom;
+export default Atom;
