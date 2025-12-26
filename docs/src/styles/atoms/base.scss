@@ -1,3 +1,6 @@
+@use "../../../../assets/styles/nuclides/fonts";
+@use "../../../../assets/styles/nuclides/tools";
+
 html, body {
   min-width: 100%;
   min-height: 100%;
@@ -6,8 +9,8 @@ html, body {
 }
 
 body {
-  @include lato();
-  @include clearAfter();
+  @include fonts.lato();
+  @include tools.clearAfter();
   padding-bottom: 200px;
 }
 

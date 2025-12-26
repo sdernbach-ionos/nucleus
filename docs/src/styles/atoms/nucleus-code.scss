@@ -1,11 +1,15 @@
+@use "../../../../assets/styles/nuclides/colors";
+@use "../../../../assets/styles/nuclides/fonts";
+
+@use "sass:meta";
 
 .hero {
-  @import "prismjs/themes/prism-okaidia";
+  @include meta.load-css("prismjs/themes/prism-okaidia.css");
 }
 
 .hero .code {
-  @include monospace();
-  background-color: $color--blackish;
+  @include fonts.monospace();
+  background-color: colors.$color--blackish;
   display: block;
   white-space: pre;
   color: white;
@@ -17,11 +21,11 @@
 
 
 code {
-  @include monospace();
+  @include fonts.monospace();
   background-color: #f9f9f9;
   display: block;
   white-space: pre;
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
   padding: 15px;
   margin: 2em 0;
   font-size: 14px;
@@ -31,14 +35,14 @@ code {
 }
 
 .language-nucleus {
-  color: $color--light-gray;
+  color: colors.$color--light-gray;
 
   .token.docblock {
-    color: $color--gray;
+    color: colors.$color--gray;
   }
 
   .token.annotation {
-    color: $color--pink;
+    color: colors.$color--pink;
   }
 
   .token.value {

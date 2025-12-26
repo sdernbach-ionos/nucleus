@@ -1,3 +1,6 @@
+@use "../../../../assets/styles/nuclides/fonts";
+@use "../../../../assets/styles/nuclides/tools";
+
 /**
  * Composition of various landing page components with a colorful background and the preview
  * window in the center to give the first glimpse of what nuclues is doing.
@@ -19,7 +22,7 @@
  *  </div>
  */
 .hero {
-  @include clearHard();
+  @include tools.clearHard();
   width: 100%;
   position: relative;
   background: #B24592;
@@ -40,7 +43,7 @@
   }
 
   h1 {
-    @include lato(300);
+    @include fonts.lato(300);
     font-size: 46px;
     color: white;
     text-align: center;

@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 /**
  * Include a media query that applies properties to the selector only on certain
  * screen widths. Breakpoints and Tweakpoints are defined in a central
@@ -45,4 +47,4 @@ body::before {
   opacity: 0.3;
 }
 
-@import 'sass-mq/mq';
+@include meta.load-css("sass-mq/mq");
