@@ -6,3 +6,5 @@ docs/build
 styleguide
 npm-debug.log
 .idea/
+*.iml
+.DS_Store
