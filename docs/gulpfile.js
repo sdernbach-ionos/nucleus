@@ -199,7 +199,7 @@ gulp.task('build:styles', function () {
         __dirname + '/../node_modules',
         __dirname + '/../assets/styles'
       ],
-      outputStyle: config.production ? 'compressed' : 'nested'
+      outputStyle: config.production ? 'compressed' : 'expanded'
     }).on('error', sassCompiler.logError))
     .pipe(autoprefixer())
     .pipe(plumber.stop())

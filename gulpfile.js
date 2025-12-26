@@ -36,6 +36,7 @@ var postcss     = require("gulp-postcss");          // Parse style sheet files
 var reporter    = require("postcss-reporter");      // Reporter for PostCSS
 var stylelint   = require("stylelint");             // Lints styles according to a ruleset
 var scss        = require("postcss-scss");          // SCSS syntax for PostCSS
+var plumber     = require('gulp-plumber');          // Catches gulp errors and prevents exit
 
 // Configure gulp-sass to use Dart Sass
 var sassCompiler = gulpSass(sass);
@@ -62,14 +63,20 @@ var LOG_CODE   = [
 gulp.task('styles', function () {
   return gulp
     .src(SOURCES + '/styles/app.scss')
+    .pipe(plumber())
     .pipe(sassCompiler({
       unixNewlines: true,
       precision: 6,
       includePaths: [
         __dirname + '/node_modules'
       ],
-      outputStyle: PRODUCTION ? 'compressed' : 'nested'
-    }).on('error', sassCompiler.logError))
+      outputStyle: PRODUCTION ? 'compressed' : 'expanded'
+    }).on('error', function(err) {
+      // Log the error but don't fail the build
+      gutil.log(gutil.colors.red('Sass Error:'), err.message);
+      this.emit('end');
+    }))
+    .pipe(plumber.stop())
     .pipe(gulp.dest(TARGET + '/styles'))
     .pipe(livereload());
 });
