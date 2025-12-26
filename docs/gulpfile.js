@@ -1,6 +1,11 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { createRequire } from 'module';
+import { readFileSync } from 'fs';
+import { createHash } from 'crypto';
+import { sync as globSync } from 'glob';
+import { chain } from 'underscore';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url);
@@ -36,7 +41,6 @@ import iconfont from 'gulp-iconfont';         // Generates an icon-font
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import gutil from 'gulp-util';             // Utility toolbox
-import hashFiles from 'hash-files';            // Hashes a set of files
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
 import merge from 'merge-stream';          // Merges two streams
@@ -85,7 +89,28 @@ var config = {
    */
   var makeHash = function (files, tolerance) {
     tolerance = tolerance || 5;
-    return hashFiles.sync({files: files}).substring(0, tolerance);
+    var allFiles = [],
+      fileData = new Buffer(0),
+      algorithm = 'sha1';
+
+      allFiles = allFiles.concat(globSync(files, { mark: true }));
+      files = allFiles;
+
+    files = chain(files.sort())
+      .unique(true)
+      .filter(function(file) {
+          return (file[file.length-1] !== '/');
+      })
+      .value();
+
+    files.forEach(function(file) {
+      fileData = Buffer.concat([fileData, readFileSync(file)]);
+    });
+
+    var hash = createHash(algorithm);
+    hash.update(fileData);
+
+    return hash.digest('hex').substring(0, tolerance);
   };
 
   var webpack_error_handler = function (err, stats, callback) {
