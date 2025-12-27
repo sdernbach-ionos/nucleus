@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "{{ name }}";
+    src: {{{ fontSrc }}};
+    font-weight: normal;
+    font-style: normal;
+}
+
+.{{ selector }}:before {
+    display: inline-block;
+    font-family: "{{ name }}" !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.{{selector}}-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.{{selector}}-2x { font-size: 2em; }
+.{{selector}}-3x { font-size: 3em; }
+.{{selector}}-4x { font-size: 4em; }
+.{{selector}}-5x { font-size: 5em; }
+.{{selector}}-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+{{# each codepoints }}
+/**
+* @icon .{{ ../selector }}--{{@key}}
+* @markup
+*  <i class="{{../selector}} {{../selector}}--{{@key}}"></i>
+*/
+.{{ ../selector }}--{{ @key }}:before {
+    content: "\\{{ codepoint this }}";
+}
+
+{{/ each }}

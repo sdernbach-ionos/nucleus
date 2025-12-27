@@ -1,3 +1,5 @@
+@use "../nuclides/reset";
+
 // layouts.scss -- Page layouts for Nucleus and the doc pages
 //
 // Copyright (C) 2016 Michael Seibt
@@ -16,7 +18,7 @@
  *  <div class="SG-layout">@{include:.SG-p}</div>
  */
 .SG-layout {
-  @include reset();
+  @include reset.reset();
   width: 100%;
   max-width: 937px;
   margin-left: auto;

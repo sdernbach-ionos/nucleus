@@ -1,31 +1,31 @@
-@import "nuclides/icons";
-@import "nuclides/sprites";
-@import "nuclides/fonts";
-@import "nuclides/colors";
+@use "nuclides/icons";
+@use "nuclides/logos";
+@use "../../../assets/styles/nuclides/fonts";
+@use "../../../assets/styles/nuclides/colors";
 
-@import "nuclides/tools";
-@import "nuclides/reset";
-@import "nuclides/breakpoints";
-@import "nuclides/z-index";
+@use "../../../assets/styles/nuclides/tools";
+@use "../../../assets/styles/nuclides/reset";
+@use "nuclides/breakpoints";
+@use "../../../assets/styles/nuclides/z-index";
 
-@import "atoms/base";
-@import "atoms/page";
-@import "atoms/code";
-@import "atoms/window";
-@import "atoms/buttons";
-@import "atoms/typography";
-@import "atoms/nucleus-code";
+@use "atoms/base";
+@use "../../../assets/styles/atoms/page";
+@use "../../../assets/styles/atoms/code";
+@use "atoms/window";
+@use "../../../assets/styles/atoms/buttons";
+@use "../../../assets/styles/atoms/typography";
+@use "atoms/nucleus-code";
 
-@import "molecules/nuclide-table";
-@import "molecules/logo";
-@import "molecules/navigation";
-@import "molecules/feature";
-@import "molecules/sponsors";
+@use "../../../assets/styles/molecules/nuclide-table";
+@use "../../../assets/styles/molecules/logo";
+@use "../../../assets/styles/molecules/navigation";
+@use "molecules/feature";
+@use "molecules/sponsors";
 
-@import "structures/hero";
-@import "structures/layouts";
-@import "structures/responsive-layouts";
-@import "structures/header";
-@import "structures/feature-list";
+@use "structures/hero";
+@use "../../../assets/styles/structures/layouts";
+@use "structures/responsive-layouts";
+@use "../../../assets/styles/structures/header";
+@use "structures/feature-list";
 
-@import "trumps/jquery-dragable";
+@use "trumps/jquery-dragable";

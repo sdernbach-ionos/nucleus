@@ -8,8 +8,6 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Directive */
 $('[data-d-code-preview-toggle]').each(function (i, element ) {
   $(element).on('click', function () {

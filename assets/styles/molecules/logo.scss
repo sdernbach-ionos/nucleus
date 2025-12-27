@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+
 // logo.scss -- Logo for Nucleus use only
 //
 // Copyright (C) 2016 Michael Seibt
@@ -21,7 +24,7 @@
  */
 .SG-logo {
   display: inline-block;
-  color: $color--accent;
+  color: colors.$color--accent;
 
   .SG-logo__icon {
     font-size: 48px;
@@ -30,7 +33,7 @@
   }
 
   .SG-logo__name {
-    @include lato(700);
+    @include fonts.lato(700);
     font-size: 22px;
     display: inline-block;
     vertical-align: baseline;

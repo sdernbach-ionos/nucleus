@@ -9,10 +9,10 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
-var ColorConverter = require('color');
+
+import Entity from './Entity.js';
+import ColorConverter from 'color';
 
 var Color = function(raw) {
   // Call parent constructor
@@ -31,6 +31,7 @@ var Color = function(raw) {
   }
 
   var colorValue = ColorConverter(raw.element.value.replace(/ *!default/, ''));
+  var rgbArray = colorValue.rgb().array();
 
   return {
     name: raw.descriptor,
@@ -42,9 +43,9 @@ var Color = function(raw) {
     location: 'nuclides.html',
     hash: this.hash(),
     values: {
-      hex: colorValue.hexString(),
-      rgba: colorValue.rgbaString(),
-      darker: colorValue.darken(0.1).hexString()
+      hex: colorValue.hex(),
+      rgba: 'rgba(' + rgbArray[0] + ', ' + rgbArray[1] + ', ' + rgbArray[2] + ', ' + colorValue.alpha() + ')',
+      darker: colorValue.darken(0.1).hex()
     }
   };
 
@@ -52,4 +53,4 @@ var Color = function(raw) {
 
 Color.prototype = Object.create(Entity.prototype);
 
-module.exports = Color;
+export default Color;

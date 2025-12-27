@@ -1,22 +1,24 @@
 @font-face {
-  font-family: "icons";
-  src: url('../fonts/icons.eot');
-  src: url('../fonts/icons.eot?#iefix') format('eot'),
-    url('../fonts/icons.woff') format('woff'),
-    url('../fonts/icons.ttf') format('truetype'),
-    url('../fonts/icons.svg#icons') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: "icons";
+    src: url("../fonts/icons.ttf?adb68a69b1f977f52ed09b976f04463c") format("truetype"),
+url("../fonts/icons.eot?adb68a69b1f977f52ed09b976f04463c#iefix") format("embedded-opentype"),
+url("../fonts/icons.woff?adb68a69b1f977f52ed09b976f04463c") format("woff"),
+url("../fonts/icons.woff2?adb68a69b1f977f52ed09b976f04463c") format("woff2"),
+url("../fonts/icons.svg?adb68a69b1f977f52ed09b976f04463c#icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
 }
 
 .ico:before {
-  display: inline-block;
-  font-family: "icons";
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    font-family: "icons" !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .ico-lg {
@@ -33,67 +35,66 @@
   text-align: center;
 }
 
+/**
+* @icon .ico--logo
+* @markup
+*  <i class="ico ico--logo"></i>
+*/
+.ico--logo:before {
+    content: "\ea01";
+}
 
 /**
- * @icon .ico--logo
- * @deprecated 
- * @markup
- *  <i class="ico ico--logo"></i>
- */
-  .ico--logo:before {
-    content: "\EA01"
-  }
+* @icon .ico--github
+* @markup
+*  <i class="ico ico--github"></i>
+*/
+.ico--github:before {
+    content: "\ea03";
+}
 
 /**
- * @icon .ico--github
- * @markup
- *  <i class="ico ico--github"></i>
- */
-  .ico--github:before {
-    content: "\EA03"
-  }
+* @icon .ico--tools
+* @markup
+*  <i class="ico ico--tools"></i>
+*/
+.ico--tools:before {
+    content: "\ea04";
+}
 
 /**
- * @icon .ico--tools
- * @markup
- *  <i class="ico ico--tools"></i>
- */
-  .ico--tools:before {
-    content: "\EA04"
-  }
+* @icon .ico--molecule
+* @markup
+*  <i class="ico ico--molecule"></i>
+*/
+.ico--molecule:before {
+    content: "\ea05";
+}
 
 /**
- * @icon .ico--molecule
- * @markup
- *  <i class="ico ico--molecule"></i>
- */
-  .ico--molecule:before {
-    content: "\EA05"
-  }
+* @icon .ico--rescue
+* @markup
+*  <i class="ico ico--rescue"></i>
+*/
+.ico--rescue:before {
+    content: "\ea06";
+}
 
 /**
- * @icon .ico--rescue
- * @markup
- *  <i class="ico ico--rescue"></i>
- */
-  .ico--rescue:before {
-    content: "\EA06"
-  }
+* @icon .ico--search
+* @markup
+*  <i class="ico ico--search"></i>
+*/
+.ico--search:before {
+    content: "\ea07";
+}
 
 /**
- * @icon .ico--search
- * @markup
- *  <i class="ico ico--search"></i>
- */
-  .ico--search:before {
-    content: "\EA07"
-  }
+* @icon .ico--glide
+* @markup
+*  <i class="ico ico--glide"></i>
+*/
+.ico--glide:before {
+    content: "\ea08";
+}
 
-/**
- * @icon .ico--glide
- * @markup
- *  <i class="ico ico--glide"></i>
- */
-  .ico--glide:before {
-    content: "\EA08"
-  }

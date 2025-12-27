@@ -1,3 +1,8 @@
+@use "sass:color";
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+@use "../nuclides/reset";
+
 // typography.scss -- Typography related styles
 //
 // Copyright (C) 2016 Michael Seibt
@@ -22,38 +27,38 @@
  */
 
 .SG-h1 {
-  @include lato(300);
+  @include fonts.lato(300);
 
   padding: 0;
   margin: 0;
   font-size: 42px;
-  color: $color--accent;
+  color: colors.$color--accent;
   margin-bottom: 1em;
 }
 
 .SG-h2 {
-  color: $color--accent;
+  color: colors.$color--accent;
   font-size: 21px;
-  border-bottom: 1px solid $color--light-gray;
+  border-bottom: 1px solid colors.$color--light-gray;
   padding: 20px 0;
   margin-bottom: 1.5em;
 }
 
 .SG-h3 {
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
   font-size: 21px;
   margin: 2.5em 0  1.5em;
 }
 
 .SG-h4 {
-  color: $color--accent;
+  color: colors.$color--accent;
   padding-bottom: 1em;
   margin: 1em 0;
-  border-bottom: 1px dashed $color--light-gray;
+  border-bottom: 1px dashed colors.$color--light-gray;
 }
 
 .SG-h5 {
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
   font-size: 14px;
   margin: 1em 0;
 }
@@ -74,9 +79,9 @@
  */
 
 .SG-p {
-  @include reset();
+  @include reset.reset();
 
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
   margin-bottom: 1.5em;
   line-height: 1.75;
 }
@@ -94,10 +99,10 @@
  */
 .SG-hint {
   border-radius: 5px;
-  border-left: 2px solid $color--hint;
+  border-left: 2px solid colors.$color--hint;
   padding: 1em;
   margin-left: -1em;
-  background: lighten($color--hint, 15%);
+  background: color.adjust(colors.$color--hint, $lightness: 15%);
 }
 
 /**
@@ -116,9 +121,9 @@
  */
 
 .SG-strong {
-  @include lato(600);
+  @include fonts.lato(600);
 
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
 }
 
 .SG-a {
@@ -132,9 +137,9 @@
   }
 
   &.SG-a--pink {
-    color: $color--pink;
+    color: colors.$color--pink;
 
-    &:hover { border-bottom-color: $color--pink; }
+    &:hover { border-bottom-color: colors.$color--pink; }
   }
 }
 

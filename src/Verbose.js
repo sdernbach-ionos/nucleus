@@ -10,13 +10,17 @@
 
 /* global process */
 
-'use strict';
+import chalk from 'chalk';
+import wordwrap from 'wordwrap';
+import prettyjson from 'prettyjson';
+import ora from 'ora';
+import ERRORS from './messages/errors.js';
+import WARNINGS from './messages/warnings.js';
+import INFOS from './messages/infos.js';
 
-var chalk = require('chalk');
-var wrap = require('wordwrap')(80);
-var prettyjson = require('prettyjson');
+const wrap = wordwrap(80);
 
-var Verbose = {
+const Verbose = {
   LEVELS: {
     SILENT: 0,
     ERROR: 1,
@@ -24,7 +28,7 @@ var Verbose = {
     DEBUG: 3
   },
   level: 2,
-  spinner: require('ora')({
+  spinner: ora({
     spinner: {
       "interval": 100,
       "frames": [
@@ -32,9 +36,9 @@ var Verbose = {
       ]
     },
   }),
-  ERRORS: require('./messages/errors'),
-  WARNINGS : require('./messages/warnings'),
-  INFOS : require('./messages/infos'),
+  ERRORS,
+  WARNINGS,
+  INFOS,
 };
 
 Verbose.log = function (text) {
@@ -176,4 +180,4 @@ Verbose.wordwrap = function ( text ) {
 
 
 
-module.exports = Verbose;
+export default Verbose;

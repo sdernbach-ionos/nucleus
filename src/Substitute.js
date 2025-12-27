@@ -9,10 +9,11 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var _ = require('lodash');
-var Verbose = require('./Verbose');
+
+import { get, set } from './utils.js';
+import { loremIpsum } from 'lorem-ipsum';
+import Verbose from './Verbose.js';
 
 var Substitute = {
   map: {},
@@ -34,8 +35,8 @@ Substitute.process = function ( styles ) {
   // First, collect a map of all selector styles with markup annotation
   for(s in styles) {
     style = styles[s];
-    var selector = _.get(style, 'element.selector');
-    markup = _.get(style, 'annotations.markup');
+    var selector = get(style, 'element.selector');
+    markup = get(style, 'annotations.markup');
     if(selector && markup && (selector.indexOf(':') === -1)){
       this.map[selector] = markup;
     }
@@ -44,9 +45,9 @@ Substitute.process = function ( styles ) {
   // Loop through all styles again and apply substitutions
   for(s in styles) {
     style = styles[s];
-    markup = _.get(style, 'annotations.markup');
+    markup = get(style, 'annotations.markup');
     if(markup) {
-      _.set(style, 'annotations.markup', this.substitute(markup));
+      set(style, 'annotations.markup', this.substitute(markup));
     }
   }
 
@@ -54,7 +55,7 @@ Substitute.process = function ( styles ) {
 };
 
 Substitute.substitute = function ( markup ) {
-  if(_.isEmpty(markup)) {
+  if(!markup || markup.trim() === '') {
     return markup;
   }
 
@@ -84,19 +85,20 @@ Substitute.methods.lipsum = function (quantity, type) {
   }
 
   var rnd = 0.01;
-  return require('lorem-ipsum')({
+
+  return loremIpsum({
     count: quantity,
     units: type,
     random: this.staticLipsum ? function() {
       if(rnd>=1) rnd = 0.01;
       rnd += 0.01;
       return rnd;
-    } : Math.rand
+    } : Math.random
   });
 };
 
 Substitute.methods.include = function ( selector ) {
-  var markup = _.get(this.map, selector);
+  var markup = this.map[selector];
 
   if(markup) {
     return markup;
@@ -118,4 +120,4 @@ Substitute.methods.image = function (width, height) {
   }
 };
 
-module.exports = Substitute;
+export default Substitute;

@@ -1,7 +1,12 @@
+@use "sass:color";
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+@use "../nuclides/z-index";
+
 $search-triangle-size: 10px;
 
 .SG-search {
-  @include z(search);
+  @include z-index.z(search);
   display: none;
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
@@ -13,8 +18,8 @@ $search-triangle-size: 10px;
   }
 
   .selectize-control {
-    @include lato(300);
-    @include z(input, search);
+    @include fonts.lato(300);
+    @include z-index.z(input, search);
     margin: auto;
     position: absolute;
     width: 80%;
@@ -47,7 +52,7 @@ $search-triangle-size: 10px;
     border-radius: 5px;
     padding: 11px;
     input {
-      @include lato(300);
+      @include fonts.lato(300);
       font-size: 25px;
       border: 0;
       outline: none;
@@ -61,7 +66,7 @@ $search-triangle-size: 10px;
     background-color: white;
     margin-top: -4px;
     position: absolute;
-    border-top: 1px solid $color--light-gray;
+    border-top: 1px solid colors.$color--light-gray;
     border-radius: 0 0 5px 5px;
     overflow: hidden;
 
@@ -78,7 +83,7 @@ $search-triangle-size: 10px;
     &.active,
     &.active .SG-search-item__summary-label,
     &.active .SG-search-item__summary-caption {
-      background-color: $color--accent;
+      background-color: colors.$color--accent;
       color: white;
     }
 
@@ -98,19 +103,19 @@ $search-triangle-size: 10px;
     }
     .SG-search-item__summary-caption {
       font-size: 12px;
-      color: $color--gray;
+      color: colors.$color--gray;
       display: block;
     }
     .highlight {
-      background: transparentize($color--gray, 0.75);
+      background: color.adjust(colors.$color--gray, $alpha: -0.75);
       border-radius: 1px;
     }
   }
 
   .SG-search-item__details {
-    color: $color--gray;
+    color: colors.$color--gray;
     box-sizing: border-box;
-    border-left: 1px solid $color--light-gray;
+    border-left: 1px solid colors.$color--light-gray;
     display: none;
     height: 100%;
     background: white;
@@ -129,7 +134,7 @@ $search-triangle-size: 10px;
   }
 
   .SG-search-item__details-meta {
-    color: $color--gray;
+    color: colors.$color--gray;
     position: absolute;
     font-size: 12px;
     padding-left: 25%;

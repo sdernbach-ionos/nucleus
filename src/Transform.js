@@ -9,18 +9,17 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Verbose = require('./Verbose');
-var Nuclide = require('./entities/Nuclide');
-var Color = require('./entities/Color');
-var Mixin = require('./entities/Mixin');
-var Atom = require('./entities/Atom');
-var Icon = require('./entities/Icon');
-var Molecule = require('./entities/Molecule');
-var Structure = require('./entities/Structure');
 
-var Dot = require('dot-object');
+import Verbose from './Verbose.js';
+import Nuclide from './entities/Nuclide.js';
+import Color from './entities/Color.js';
+import Mixin from './entities/Mixin.js';
+import Atom from './entities/Atom.js';
+import Icon from './entities/Icon.js';
+import Molecule from './entities/Molecule.js';
+import Structure from './entities/Structure.js';
+import { get, set } from './utils.js';
 
 var Transform = {};
 
@@ -35,7 +34,6 @@ var Transform = {};
  */
 Transform.forView = function(styles) {
   var viewData = {};
-  var dot = new Dot(' > ');
 
   for (var s in styles) {
     Verbose.spin('Analyzing styles');
@@ -51,13 +49,13 @@ Transform.forView = function(styles) {
     // Pick the section or create it, if not defined yet.
     // TODO: _e is a bad idea!!
     // TODO: Extract!
-    var section = dot.pick(entity.section, viewData) || {
+    // Convert dot notation with ' > ' separator to path
+    var path = entity.section.replace(/ > /g, '.');
+    var section = get(viewData, path) || {
       '_e': []
     };
     section._e.push(entity);
-    dot.copy('data', entity.section, {
-      data: section
-    }, viewData);
+    set(viewData, path, section);
   }
 
   return viewData;
@@ -140,4 +138,4 @@ Transform.createEntity = function(style) {
   return false;
 };
 
-module.exports = Transform;
+export default Transform;

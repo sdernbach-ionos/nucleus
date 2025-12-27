@@ -8,19 +8,17 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Dependencies */
-var SweetAlert2 = require('sweetalert2');
-var Clipboard = require('clipboard');
+import SweetAlert2 from 'sweetalert2';
+import Clipboard from 'clipboard';
 
 /** Directive */
 $('[data-d-copy]').each(function (i, element ) {
   var copy = new Clipboard(element);
   copy.on('success', function () {
-    SweetAlert2({
+    SweetAlert2.fire({
       title: "Copied!",
-      type: "success",
+      icon: "success",
       toast: true,
       showConfirmButton: false,
       position: 'top-right',

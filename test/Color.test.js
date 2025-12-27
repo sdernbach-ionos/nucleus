@@ -1,12 +1,6 @@
-/* global describe */
-/* global it */
-
-'use strict';
-
-var assert = require('assert');
-var Color = require('../src/entities/Color.js');
-var Helpers = require('./helpers');
-var Verbose = require('../src/Verbose.js');
+import Color from '../src/entities/Color.js';
+import Helpers from './helpers.js';
+import Verbose from '../src/Verbose.js';
 
 describe('Color', function() {
 
@@ -14,9 +8,9 @@ describe('Color', function() {
     Helpers.hook(Verbose, 'log');
 
     var c = new Color({});
-    assert.deepEqual(c, {});
+    expect(c).toEqual({});
 
-    assert.ok(Helpers.logCalled >= 1);
+    expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
   });
 
   /********************************************************/
@@ -33,7 +27,7 @@ describe('Color', function() {
       }
     });
 
-    assert.deepEqual(c, {
+    expect(c).toEqual({
       name: '$testcolor',
       type: 'color',
       section: 'Nuclides > Colors > Other',
@@ -64,7 +58,7 @@ describe('Color', function() {
       }
     });
 
-    assert.equal(c.values.hex, '#00FF00');
+    expect(c.values.hex).toBe('#00FF00');
   });
 
   /********************************************************/
@@ -80,7 +74,7 @@ describe('Color', function() {
         value: '#00FF00'
       }
     });
-    assert.deepEqual(c, {
+    expect(c).toEqual({
       name: '$testcolor',
       type: 'color',
       section: 'Nuclides > Colors > Other',

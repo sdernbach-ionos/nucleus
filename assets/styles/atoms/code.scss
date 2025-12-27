@@ -1,3 +1,7 @@
+@use "sass:meta";
+@use "../nuclides/colors";
+@use "../nuclides/fonts";
+
 // code.scss -- Code / monospaced font blocks
 //
 // Copyright (C) 2016 Michael Seibt
@@ -8,7 +12,7 @@
 // of the MIT license. See the LICENSE file for details.
 
 .SG-component {
-  @import "prismjs/themes/prism-okaidia";
+  @include meta.load-css("../../../node_modules/prismjs/themes/prism-okaidia.css");
 }
 
 /**
@@ -21,7 +25,7 @@
  *  <div class="SG-code">Code</div>
  */
 .SG-code {
-  background: $color--dark-gray;
+  background: colors.$color--dark-gray;
   color: white;
   font-family: monospace;
   padding: 20px;
@@ -30,7 +34,7 @@
   margin-bottom: 1em;
   overflow-x: auto;
   border-radius: 3px;
-  box-shadow: 0 2px 0 1px $color--blackish;
+  box-shadow: 0 2px 0 1px colors.$color--blackish;
 
   &.SG-code--hidden {
     display: none;
@@ -51,12 +55,12 @@
  *  <div class="SG-code-nucleus">Example</div>
  */
 .SG-code-nucleus {
-  @include monospace();
+  @include fonts.monospace();
 
   background-color: #f9f9f9;
   display: block;
   white-space: pre;
-  color: $color--dark-gray;
+  color: colors.$color--dark-gray;
   padding: 15px;
   margin: 2em 0;
   font-size: 14px;
@@ -66,14 +70,14 @@
   box-shadow: 0 2px 0 1px #e8e8e8;
 
   &.language-nucleus {
-    color: $color--light-gray;
+    color: colors.$color--light-gray;
 
     .token.docblock {
-      color: $color--gray;
+      color: colors.$color--gray;
     }
 
     .token.annotation {
-      color: $color--pink;
+      color: colors.$color--pink;
     }
 
     .token.value {

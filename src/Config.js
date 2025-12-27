@@ -11,21 +11,28 @@
  */
 
 /* global process */
-/* global __dirname */
 
-'use strict';
+import fs from 'fs';
+import merge from 'merge';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { glob } from 'glob';
+import Verbose from './Verbose.js';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-var fs = require('fs');
-var merge = require('merge');
-var argv = require('yargs')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
+const argv = yargs(hideBin(process.argv))
             .alias('c', 'config')
             .alias('v', 'verbose')
             .alias('r', 'norandom')
             .argv;
 
-var Verbose = require('./Verbose');
-
-var Config = {};
+const Config = {};
 
 /**
  * Gathers the configuration.
@@ -112,13 +119,13 @@ Config.parse = function () {
 /**
  * Returns a set of files from a Glob string.
  *
- * @param  {string} glob
+ * @param  {string} globPattern
  *         Glob pattern
  * @return {array}
  *         Array of file names
  */
-Config.getFilesFromGlob = function ( glob ) {
-  return require('glob').sync(glob);
+Config.getFilesFromGlob = function ( globPattern ) {
+  return glob.sync(globPattern).sort();
 };
 
 Config.getFromArguments = function () {
@@ -145,4 +152,4 @@ Config.shouldRunInit = function () {
   return false;
 };
 
-module.exports = Config;
+export default Config;

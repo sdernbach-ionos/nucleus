@@ -1,12 +1,6 @@
-/* global describe */
-/* global it */
-
-'use strict';
-
-var assert = require('assert');
-var Helpers = require('./helpers');
-var Entity = require('../src/entities/Entity.js');
-var Verbose = require('../src/Verbose.js');
+import Helpers from './helpers.js';
+import Entity from '../src/entities/Entity.js';
+import Verbose from '../src/Verbose.js';
 
 describe('Entity', function() {
 
@@ -20,9 +14,9 @@ describe('Entity', function() {
 
     e.fillable = ['description', 'deprecated'];
 
-    assert.equal(e.validate(), true);
-    assert.equal(e.raw.annotations.description, '');
-    assert.equal(e.raw.annotations.deprecated, false);
+    expect(e.validate()).toBe(true);
+    expect(e.raw.annotations.description).toBe('');
+    expect(e.raw.annotations.deprecated).toBe(false);
   });
 
   /********************************************************/
@@ -37,16 +31,16 @@ describe('Entity', function() {
 
       // Input is already fine
       e.raw.annotations.section = 'Section > Subsection';
-      assert.strictEqual(e.getSection(), 'Section > Subsection');
+      expect(e.getSection()).toBe('Section > Subsection');
 
       e.raw.annotations.section = ' Section > Subsection ';
-      assert.strictEqual(e.getSection(), 'Section > Subsection');
+      expect(e.getSection()).toBe('Section > Subsection');
 
       e.raw.annotations.section = '> Section > Subsection >';
-      assert.strictEqual(e.getSection(), 'Section > Subsection');
+      expect(e.getSection()).toBe('Section > Subsection');
 
       e.raw.annotations.section = ' > Section > Subsection> ';
-      assert.strictEqual(e.getSection(), 'Section > Subsection');
+      expect(e.getSection()).toBe('Section > Subsection');
     });
 
   });
@@ -59,8 +53,8 @@ describe('Entity', function() {
       var e = new Entity({});
 
       Helpers.hook(Verbose, 'log');
-      assert.equal(e.validate(), false);
-      assert.ok(Helpers.logCalled >= 1);
+      expect(e.validate()).toBe(false);
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
     });
 
     it('should complain if the entity has invalid annotations', function() {
@@ -75,13 +69,13 @@ describe('Entity', function() {
 
       // All good
       e.fillable = ['allowed'];
-      assert.equal(e.validate(), true);
-      assert.equal(Helpers.logCalled, 0);
+      expect(e.validate()).toBe(true);
+      expect(Helpers.logCalled).toBe(0);
 
       // Invalid annotation
       e.fillable = [];
-      assert.equal(e.validate(), false);
-      assert.ok(Helpers.logCalled >= 1);
+      expect(e.validate()).toBe(false);
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
     });
 
     it('should complain if the sections value is malformed', function() {
@@ -96,16 +90,16 @@ describe('Entity', function() {
 
       // Beginning of the string
       Helpers.hook(Verbose, 'log');
-      assert.ok(Helpers.logCalled === 0);
-      assert.equal(e.validate(), true);
-      assert.ok(Helpers.logCalled >= 1);
+      expect(Helpers.logCalled).toBe(0);
+      expect(e.validate()).toBe(true);
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
 
       // End of string
       e.raw.annotations.section = 'Section > ok >';
       Helpers.hook(Verbose, 'log');
-      assert.ok(Helpers.logCalled === 0);
-      assert.equal(e.validate(), true);
-      assert.ok(Helpers.logCalled >= 1);
+      expect(Helpers.logCalled).toBe(0);
+      expect(e.validate()).toBe(true);
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
     });
 
     it('should complain if the sections value is not a string', function() {
@@ -120,9 +114,9 @@ describe('Entity', function() {
 
       // Beginning of the string
       Helpers.hook(Verbose, 'log');
-      assert.ok(Helpers.logCalled === 0);
-      assert.equal(e.validate(), false);
-      assert.ok(Helpers.logCalled >= 1);
+      expect(Helpers.logCalled).toBe(0);
+      expect(e.validate()).toBe(false);
+      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
     });
 
   });

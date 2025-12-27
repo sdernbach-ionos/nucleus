@@ -1,3 +1,8 @@
+@use "../../../../assets/styles/nuclides/colors";
+@use "../nuclides/breakpoints";
+@use "../nuclides/media-queries" as *;
+@use "../nuclides/icons";
+
 /**
  * OS X window mockup. Fits well with the split-pane for the landing page - as
  * shown in this example (we are using the @{include} substitution command here).
@@ -10,7 +15,7 @@
  *  </div>
  */
 .window {
-  background-color: $color--whitesmoke;
+  background-color: colors.$color--whitesmoke;
   padding-top: 25px;
   border-radius: 5px;
   position: relative;
@@ -60,9 +65,10 @@
   .split-pane__handle {
     @extend .ico;
     @extend .ico--glide;
+
     width: 30px;
     height: 30px;
-    background-color: $color--accent;
+    background-color: colors.$color--accent;
     border-radius: 100%;
     position: absolute;
     right: -15px;

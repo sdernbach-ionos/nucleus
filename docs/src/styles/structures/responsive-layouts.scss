@@ -1,3 +1,6 @@
+@use "../nuclides/breakpoints";
+@use "../nuclides/media-queries" as *;
+
 .SG-layout--two-columns {
 
   @include mq($until: tablet) {

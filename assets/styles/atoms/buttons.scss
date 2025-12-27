@@ -1,3 +1,5 @@
+@use "../nuclides/colors";
+
 // button.scss -- Button styles
 //
 // Copyright (C) 2016 Michael Seibt
@@ -22,9 +24,9 @@
  *  </div>
  */
 .SG-button {
-  color: $color--gray;
+  color: colors.$color--gray;
   background: none;
-  border: 1px solid $color--light-gray;
+  border: 1px solid colors.$color--light-gray;
   border-radius: 5px;
   padding: 10px 14px;
   display: inline-block;
@@ -33,13 +35,13 @@
   text-decoration: none;
 
   &:hover {
-    border-color: $color--accent;
-    color: $color--accent;
+    border-color: colors.$color--accent;
+    color: colors.$color--accent;
   }
 
   &:active {
     background: linear-gradient(to bottom, #f2f2f2 0%, white 10%);
-    border-color: $color--light-gray;
+    border-color: colors.$color--light-gray;
   }
 
   // Larger button
@@ -55,7 +57,7 @@
 
     &:hover {
       background: white;
-      color: $color--accent;
+      color: colors.$color--accent;
     }
 
     &:active {

@@ -1,8 +1,8 @@
 'use strict';
 
-require('jquery-ui/ui/widgets/mouse');
-require('jquery-ui/ui/widgets/resizable');
-require('touchpunch');
+import 'jquery-ui/ui/widgets/mouse.js';
+import 'jquery-ui/ui/widgets/resizable.js';
+import 'touchpunch';
 
 $('.split-pane__preview').resizable({
   handles: 'e'

@@ -8,10 +8,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Dependencies */
-var keymaster = require('keymaster');
+import keymaster from 'keymaster';
 
 /** Directive */
 var SearchBoxTriggerDirective = {};
@@ -45,11 +43,11 @@ SearchBoxTriggerDirective.hideSearch = function () {
   $('.SG-search').hide();
 };
 
-SearchBoxTriggerDirective.showSearch = function () {
+SearchBoxTriggerDirective.showSearch = function (e) {
   this.isVisible = true;
   $('.SG-search').show();
   $('.selectize-input input').focus();
-  event.stopPropagation();
+  e.stopPropagation();
   return false;
 };
 

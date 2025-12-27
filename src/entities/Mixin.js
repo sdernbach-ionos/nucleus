@@ -8,9 +8,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
 
-var Entity = require('./Entity');
+
+import Entity from './Entity.js';
 
 var Mixin = function(raw) {
   // Call parent constructor
@@ -98,4 +98,4 @@ Mixin.prototype.getExample = function() {
 };
 
 
-module.exports = Mixin;
+export default Mixin;

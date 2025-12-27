@@ -10,12 +10,19 @@
 
 /* global process */
 
-'use strict';
+import Verbose from './src/Verbose.js';
+import fs from 'fs';
+import promptSync from 'prompt-sync';
+import chalk from 'chalk';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-var Verbose = require('./src/Verbose');
-var fs = require('fs');
-var prompt = require('prompt-sync')({ sigint: true });
-var chalk = require('chalk');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
+const prompt = promptSync({ sigint: true });
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +127,7 @@ Verbose.log('   Wrote config to config.nucleus.json\n\n');
 
 var testRun = prompt(prefix + chalk.bold.cyan('Do you want to do a run now? (y/n) ? '), 'y');
 if(isTruthy(testRun)) {
-  require('./index');
+  await import('./index.js');
 }
 
 

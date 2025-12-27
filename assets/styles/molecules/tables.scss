@@ -1,3 +1,6 @@
+@use "../nuclides/colors";
+@use "../nuclides/reset";
+
 // tables.scss -- Deprecated table style for doc pages
 //
 // Copyright (C) 2016 Michael Seibt
@@ -37,18 +40,18 @@
  *   </table>
  */
 .SG-table {
-  @include reset();
+  @include reset.reset();
   width: 100%;
 
   .SG-table__cell {
     padding: 10px 0;
     margin: 10px 0;
-    color: $color--gray;
+    color: colors.$color--gray;
   }
 
   .SG-table__head {
     text-align: left;
-    color: $color--dark-gray;
-    border-bottom: 1px solid $color--light-gray;
+    color: colors.$color--dark-gray;
+    border-bottom: 1px solid colors.$color--light-gray;
   }
 }

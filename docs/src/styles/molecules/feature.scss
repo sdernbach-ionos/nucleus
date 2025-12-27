@@ -1,3 +1,6 @@
+@use "../../../../assets/styles/nuclides/colors";
+@use "../../../../assets/styles/nuclides/fonts";
+
 /**
  * List entry for the feature list on the landing page, consisting of an icon,
  * a brief description and a link to the corresponding documentation page.
@@ -24,7 +27,7 @@
 
   // Pink box with white text
   &:hover {
-    background-color: $color--pink;
+    background-color: colors.$color--pink;
     .ico::before, .feature__description {
       color: white;
     }
@@ -44,12 +47,12 @@
   .ico {
     display: block;
     font-size: 70px;
-    color: $color--pink;
+    color: colors.$color--pink;
   }
 
   .feature__description {
-    @include lato(600);
-    color: $color--dark-gray;
+    @include fonts.lato(600);
+    color: colors.$color--dark-gray;
     font-size: 21px;
     display: block;
     margin: 1.5em 0 2em 0;

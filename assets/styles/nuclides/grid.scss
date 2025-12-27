@@ -1,4 +1,6 @@
-// grid.scss -- Gridle setup
+@use "sass:math";
+
+// grid.scss -- Simple dependency-free grid system
 //
 // Copyright (C) 2016 Michael Seibt
 //
@@ -7,30 +9,91 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-@import "node_modules/gridle/sass/gridle/gridle";
-@include gridle_setup( (
-  context : 12,
-  gutter-width : 20px,
-  dir-attribute : false,
-  classes-prefix : "SG-"
-) );
-@include gridle_register_state ( mobile , (
-  max-width : 480px
-) );
-@include gridle_register_state ( tablet , (
-  min-width : 481px,
-  max-width : 1024px
-) ) ;
-@include gridle_generate_classes ( );
+// Grid configuration
+$grid-columns: 12;
+$grid-gutter: 20px;
 
-@include gridle_generate_custom_class( ("txt","-","center","@","%state") ) {
-  text-align: center;
+// Row container
+.SG-row {
+  display: flex!important;
+  flex-wrap: wrap;
+  margin-left: math.div(-$grid-gutter, 2);
+  margin-right: math.div(-$grid-gutter, 2);
+
+  &.SG-row-full {
+    width: 100vw;
+    margin-left: 50% !important;
+    margin-right: 0 !important;
+    transform: translateX(-50%);
+  }
+
+  &.SG-row-align-middle {
+    align-items: center;
+    font-size: 1rem;
+  }
 }
 
-@include gridle_generate_custom_class( ("txt","-","right","@","%state") ) {
-  text-align: right;
+// Grid columns
+@for $i from 1 through $grid-columns {
+  .SG-gr-#{$i} {
+    flex: 0 0 math.percentage(math.div($i, $grid-columns));
+    max-width: math.percentage(math.div($i, $grid-columns));
+    padding-left: math.div($grid-gutter, 2);
+    padding-right: math.div($grid-gutter, 2);
+  }
 }
 
-@include gridle_generate_custom_class( ("txt","-","left","@","%state") ) {
-  text-align: left;
+// Responsive breakpoints
+// Mobile (max-width: 480px)
+@media (max-width: 480px) {
+  @for $i from 1 through $grid-columns {
+    .SG-gr-#{$i}\@mobile {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// Tablet (min-width: 481px, max-width: 1024px)
+@media (min-width: 481px) and (max-width: 1024px) {
+  @for $i from 1 through $grid-columns {
+    .SG-gr-#{$i}\@tablet {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// Text alignment utilities
+.SG-txt-center { text-align: center; }
+.SG-txt-right { text-align: right; }
+.SG-txt-left { text-align: left; }
+
+// Additional utility classes for gridle compatibility
+.SG-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: math.div($grid-gutter, 2);
+  padding-right: math.div($grid-gutter, 2);
+}
+
+.SG-no-gutter {
+  padding: 0;
+}
+
+.SG-no-gutter-left {
+  padding-left: 0
+}
+
+.SG-no-gutter-right {
+  padding-right: 0
+}
+
+.SG-no-gutter-top {
+  padding-top: 0
+}
+
+.SG-no-gutter-bottom {
+  padding-bottom: 0
 }

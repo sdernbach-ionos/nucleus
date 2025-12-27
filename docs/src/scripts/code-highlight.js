@@ -1,7 +1,7 @@
 'use strict';
 
-var Prism = require('prismjs');
-require('prismjs/components/prism-scss');
+import Prism from 'prismjs';
+import 'prismjs/components/prism-scss.js';
 
 Prism.languages.nucleus = {
   'docblock': {
