@@ -31,7 +31,7 @@ import webpack from 'webpack';               // Used for Javascript packing
 import chalk from 'chalk';                     // Terminal string styling
 import { deleteAsync } from 'del';               // Removes a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
-import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
+
 import gulpEslint from 'gulp-eslint-new';    // Lints JavaScript
 import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
 import postcss from "gulp-postcss";          // Parse style sheet files
@@ -52,9 +52,7 @@ var sassCompiler = gulpSass(sass);
 var SOURCES     = 'assets';
 var TARGET      = 'build';
 var PRODUCTION  = process.argv.indexOf('--production') !== -1;
-var LOG_CODE   = [
-    'console.log', 'console.warn', 'console.info', 'debugger;'
-];
+
 
 /*
 |--------------------------------------------------------------------------
@@ -230,7 +228,6 @@ gulp.task('lint:scripts', function () {
       SOURCES + '/scripts/*.js',
       SOURCES + '/scripts/**/*.js'
     ])
-    .pipe(logwarn(LOG_CODE))
     .pipe(gulpEslint())
     .pipe(gulpEslint.format())
     .pipe(gulpEslint.failAfterError());

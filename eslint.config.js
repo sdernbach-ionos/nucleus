@@ -26,6 +26,8 @@ export default [
     rules: {
       'no-unused-vars': 'error',
       'no-undef': 'error',
+      'no-console': 'warn',        // Warn on console.log, console.warn, etc.
+      'no-debugger': 'error',       // Error on debugger statements
     }
   }
 ];

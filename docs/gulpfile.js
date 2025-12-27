@@ -64,10 +64,7 @@ var config = {
   // Flag to indicate a production-ready build
   production: process.argv.indexOf('--production') !== -1,
 
-  // Warn for these logging leftovers in the source
-  logwarn: [
-    'console.log', 'console.warn', 'console.info', 'debugger;'
-  ]
+
 };
 
 /*
