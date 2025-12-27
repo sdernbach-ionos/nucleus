@@ -8,7 +8,6 @@ import { chain } from 'underscore';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
 
 /* gulpfile.js -- Builds the assets for the style guide documentation pages
  *

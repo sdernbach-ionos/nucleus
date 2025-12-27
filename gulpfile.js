@@ -31,9 +31,6 @@ import webpack from 'webpack';               // Used for Javascript packing
 import chalk from 'chalk';                     // Terminal string styling
 import { deleteAsync } from 'del';               // Removes a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
-import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
-import handlebars from 'handlebars';             // Handlebars template engine
-import rename from "gulp-rename";           // Renames a set of files
 import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
 import gulpEslint from 'gulp-eslint-new';    // Lints JavaScript
 import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
