@@ -318,9 +318,7 @@ gulp.task('copy:images', function () {
     .src([
       config.sources + '/images/*.png',
       config.sources + '/images/*.jpg'
-    ])
-    //.pipe(buffer())
-    //.pipe(imagemin())
+    ], { encoding: false })
     .pipe(gulp.dest(config.target + '/images'));
 });
 
