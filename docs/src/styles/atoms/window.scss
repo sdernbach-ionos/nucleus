@@ -1,6 +1,7 @@
 @use "../../../../assets/styles/nuclides/colors";
 @use "../nuclides/breakpoints";
 @use "../nuclides/media-queries" as *;
+@use "../nuclides/icons";
 
 /**
  * OS X window mockup. Fits well with the split-pane for the landing page - as
@@ -62,21 +63,13 @@
   height: 400px;
 
   .split-pane__handle {
+    @extend .ico;
+    @extend .ico--glide;
+
     width: 30px;
     height: 30px;
     background-color: colors.$color--accent;
     border-radius: 100%;
-    
-    &:before {
-      display: inline-block;
-      font-family: "icons";
-      font-style: normal;
-      font-weight: normal;
-      line-height: 1;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      content: "\EA08"; // ico--glide icon
-    }
     position: absolute;
     right: -15px;
     top: 0;

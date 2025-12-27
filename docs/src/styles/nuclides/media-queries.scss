@@ -4,10 +4,25 @@
 @use 'breakpoints' as *;
 @use 'sass:map';
 
-// Media query mixin
-// Usage: @include mq($from: mobile) { ... }
-//        @include mq($until: tablet) { ... }
-//        @include mq($from: mobile, $until: desktop) { ... }
+/**
+ * Include a media query that applies properties to the selector only on certain
+ * screen widths. Breakpoints and Tweakpoints are defined in a central
+ * configuration. Available breakpoints are:
+ *  mobile,
+ *  tabletPortrait,
+ *  tablet,
+ *  desktop and
+ *  wide
+ *
+ * @section Tools
+ * @mixin Breakpoint Media-Query
+ * @param $from Inclusive starting breakpoint
+ * @param $until Inclusive ending breakpoint
+ * @example
+ *  @include mq($from: tablet);
+ *  @include mq($until: desktop);
+ *  @include mq($from: mobile, $until: desktop);
+ */
 @mixin mq($from: null, $until: null) {
   $min-width: null;
   $max-width: null;
