@@ -15,7 +15,7 @@ $grid-gutter: 20px;
 
 // Row container
 .SG-row {
-  display: flex;
+  display: flex!important;
   flex-wrap: wrap;
   margin-left: math.div(-$grid-gutter, 2);
   margin-right: math.div(-$grid-gutter, 2);
@@ -23,6 +23,11 @@ $grid-gutter: 20px;
   &.SG-row-full {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  &.SG-row-align-middle {
+    align-items: center;
+    font-size: 1rem;
   }
 }
 
@@ -33,12 +38,6 @@ $grid-gutter: 20px;
     max-width: math.percentage(math.div($i, $grid-columns));
     padding-left: math.div($grid-gutter, 2);
     padding-right: math.div($grid-gutter, 2);
-
-    &.SG-no-gutter,
-    &.SG-nogutter {
-      padding-left: 0;
-      padding-right: 0;
-    }
   }
 }
 
@@ -51,10 +50,6 @@ $grid-gutter: 20px;
       max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
-
-  .SG-txt-center\@mobile { text-align: center; }
-  .SG-txt-right\@mobile { text-align: right; }
-  .SG-txt-left\@mobile { text-align: left; }
 }
 
 // Tablet (min-width: 481px, max-width: 1024px)
@@ -65,10 +60,6 @@ $grid-gutter: 20px;
       max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
-
-  .SG-txt-center\@tablet { text-align: center; }
-  .SG-txt-right\@tablet { text-align: right; }
-  .SG-txt-left\@tablet { text-align: left; }
 }
 
 // Text alignment utilities
@@ -83,4 +74,24 @@ $grid-gutter: 20px;
   margin-right: auto;
   padding-left: math.div($grid-gutter, 2);
   padding-right: math.div($grid-gutter, 2);
+}
+
+.SG-no-gutter {
+  padding: 0;
+}
+
+.SG-no-gutter-left {
+  padding-left: 0
+}
+
+.SG-no-gutter-right {
+  padding-right: 0
+}
+
+.SG-no-gutter-top {
+  padding-top: 0
+}
+
+.SG-no-gutter-bottom {
+  padding-bottom: 0
 }

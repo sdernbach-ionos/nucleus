@@ -125,7 +125,7 @@ Config.parse = function () {
  *         Array of file names
  */
 Config.getFilesFromGlob = function ( globPattern ) {
-  return glob.sync(globPattern);
+  return glob.sync(globPattern).sort();
 };
 
 Config.getFromArguments = function () {
