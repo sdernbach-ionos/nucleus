@@ -34,7 +34,7 @@ import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import rename from "gulp-rename";           // Renames a set of files
 import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
-import jshint from 'gulp-jshint';           // Hints JavaScript
+import gulpEslint from 'gulp-eslint-new';    // Lints JavaScript
 import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
 import postcss from "gulp-postcss";          // Parse style sheet files
 import reporter from "postcss-reporter";      // Reporter for PostCSS
@@ -244,7 +244,9 @@ gulp.task('lint:scripts', function () {
       SOURCES + '/scripts/**/*.js'
     ])
     .pipe(logwarn(LOG_CODE))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(gulpEslint())
+    .pipe(gulpEslint.format())
+    .pipe(gulpEslint.failAfterError());
 });
 
 gulp.task('lint:styles', function () {
