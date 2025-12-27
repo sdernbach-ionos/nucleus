@@ -103,21 +103,19 @@ gulp.task('icons', async function(){
   await generateFonts({
     inputDir: SOURCES + '/icons',
     outputDir: TARGET + '/fonts',
+    fontsUrl: '../fonts',
     name: 'SG-icons',
-    fontTypes: ['ttf', 'eot', 'woff'],
-    assetTypes: ['css', 'json'],
-    formatOptions: {
-      json: {
-        indent: 2
-      }
-    },
+    fontTypes: ['ttf', 'eot', 'woff', 'woff2', 'svg'],
+    assetTypes: ['css'],
+    selector: 'SG-ico',
     getIconId: ({ basename }) => {
       return basename.split('-')[1];
     },
-    templates: {},  // Disable default CSS generation
+    templates: {
+      css: './assets/styles/tools/icons.hbs'
+    },
     pathOptions: {
-        css: TARGET + '/fonts/SG-icons.css', // TODO adjust
-        json: TARGET + '/fonts/SG-icons.json' // TODO adjust
+        css: './assets/styles/nuclides/icons.css'
     },
     codepoints: {
       'logo': 59905,
@@ -131,35 +129,6 @@ gulp.task('icons', async function(){
     round: 10e12,
     descent: 0
   });
-
-  // Read the generated JSON to create our custom CSS
-  const iconData = JSON.parse(await fs.readFile(TARGET + '/fonts/SG-icons.json', 'utf-8'));
-
-  // Transform to format expected by Handlebars template
-  const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
-    name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
-    unicodeHex: parseInt(codepoint, 16).toString(16).toUpperCase()
-  }));
-
-  // Register Handlebars helpers
-  handlebars.registerHelper('and', function(a, b) {
-    return a && b;
-  });
-  
-  handlebars.registerHelper('eq', function(a, b) {
-    return a === b;
-  });
-
-  // Generate CSS from template
-  return gulp.src(SOURCES + '/styles/tools/icons.hbs')
-    .pipe(consolidate('handlebars', {
-      glyphs: glyphs,
-      fontName: 'SG-icons',
-      fontPath: '../fonts/',
-      className: 'SG-ico'
-    }))
-    .pipe(rename({ basename: 'icons', extname: '.css' }))
-    .pipe(gulp.dest(SOURCES + '/styles/nuclides/'));
 });
 
 /*

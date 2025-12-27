@@ -1,12 +1,17 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.ttf?adb68a69b1f977f52ed09b976f04463c") format("truetype"),
-url("./icons.eot?adb68a69b1f977f52ed09b976f04463c#iefix") format("embedded-opentype"),
-url("./icons.woff?adb68a69b1f977f52ed09b976f04463c") format("woff");
+    src: url("../fonts/icons.ttf?adb68a69b1f977f52ed09b976f04463c") format("truetype"),
+url("../fonts/icons.eot?adb68a69b1f977f52ed09b976f04463c#iefix") format("embedded-opentype"),
+url("../fonts/icons.woff?adb68a69b1f977f52ed09b976f04463c") format("woff"),
+url("../fonts/icons.woff2?adb68a69b1f977f52ed09b976f04463c") format("woff2"),
+url("../fonts/icons.svg?adb68a69b1f977f52ed09b976f04463c#icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
 }
 
-i[class^="icon-"]:before, i[class*=" icon-"]:before {
-    font-family: icons !important;
+.ico:before {
+    display: inline-block;
+    font-family: "icons" !important;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;
@@ -16,24 +21,80 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-logo:before {
+.ico-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.ico-2x { font-size: 2em; }
+.ico-3x { font-size: 3em; }
+.ico-4x { font-size: 4em; }
+.ico-5x { font-size: 5em; }
+.ico-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+/**
+* @icon .ico--logo
+* @markup
+*  <i class="ico ico--logo"></i>
+*/
+.ico--logo:before {
     content: "\ea01";
 }
-.icon-github:before {
+
+/**
+* @icon .ico--github
+* @markup
+*  <i class="ico ico--github"></i>
+*/
+.ico--github:before {
     content: "\ea03";
 }
-.icon-tools:before {
+
+/**
+* @icon .ico--tools
+* @markup
+*  <i class="ico ico--tools"></i>
+*/
+.ico--tools:before {
     content: "\ea04";
 }
-.icon-molecule:before {
+
+/**
+* @icon .ico--molecule
+* @markup
+*  <i class="ico ico--molecule"></i>
+*/
+.ico--molecule:before {
     content: "\ea05";
 }
-.icon-rescue:before {
+
+/**
+* @icon .ico--rescue
+* @markup
+*  <i class="ico ico--rescue"></i>
+*/
+.ico--rescue:before {
     content: "\ea06";
 }
-.icon-search:before {
+
+/**
+* @icon .ico--search
+* @markup
+*  <i class="ico ico--search"></i>
+*/
+.ico--search:before {
     content: "\ea07";
 }
-.icon-glide:before {
+
+/**
+* @icon .ico--glide
+* @markup
+*  <i class="ico ico--glide"></i>
+*/
+.ico--glide:before {
     content: "\ea08";
 }
+

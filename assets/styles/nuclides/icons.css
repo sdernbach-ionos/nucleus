@@ -1,4 +1,4 @@
-/* icons.lodash.css -- Template for the automatically generated icon stack
+/* icons.hbs -- Template for the automatically generated icon stack
  *
  * Copyright (C) 2016 Michael Seibt
  *
@@ -9,91 +9,84 @@
  */
 
 @font-face {
-  font-family: "SG-icons";
-  src: url('../fonts/SG-icons.eot');
-  src: url('../fonts/SG-icons.eot?#iefix') format('eot'),
-    url('../fonts/SG-icons.woff') format('woff'),
-    url('../fonts/SG-icons.ttf') format('truetype'),
-    url('../fonts/SG-icons.svg#SG-icons') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: "SG-icons";
+    src: url("../fonts/SG-icons.ttf?df16d07844186a1b3525c036bf93bfdf") format("truetype"),
+url("../fonts/SG-icons.eot?df16d07844186a1b3525c036bf93bfdf#iefix") format("embedded-opentype"),
+url("../fonts/SG-icons.woff?df16d07844186a1b3525c036bf93bfdf") format("woff"),
+url("../fonts/SG-icons.woff2?df16d07844186a1b3525c036bf93bfdf") format("woff2"),
+url("../fonts/SG-icons.svg?df16d07844186a1b3525c036bf93bfdf#SG-icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
 }
 
 .SG-ico:before {
-  display: inline-block;
-  font-family: "SG-icons";
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    font-family: "SG-icons" !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .SG-ico-lg {
-  font-size: 1.3333333333333333em;
-  line-height: 0.75em;
-  vertical-align: -15%;
+    font-size: 1.3333333333333333em;
+    line-height: 0.75em;
+    vertical-align: -15%;
 }
 .SG-ico-2x { font-size: 2em; }
 .SG-ico-3x { font-size: 3em; }
 .SG-ico-4x { font-size: 4em; }
 .SG-ico-5x { font-size: 5em; }
 .SG-ico-fw {
-  width: 1.2857142857142858em;
-  text-align: center;
+    width: 1.2857142857142858em;
+    text-align: center;
 }
 
+/**
+* @icon .SG-ico--logo
+* @markup
+*  <i class="SG-ico SG-ico--logo"></i>
+*/
+.SG-ico--logo:before {
+    content: "\ea01";
+}
 
 /**
- * @icon .SG-ico--logo
- * @markup
- *  <i class="SG-ico SG-ico--logo"></i>
- */
-  .SG-ico--logo:before {
-    content: "\9905"
-  }
+* @icon .SG-ico--code
+* @markup
+*  <i class="SG-ico SG-ico--code"></i>
+*/
+.SG-ico--code:before {
+    content: "\ea02";
+}
 
 /**
- * @icon .SG-ico--code
- * @markup
- *  <i class="SG-ico SG-ico--code"></i>
- */
-  .SG-ico--code:before {
-    content: "\9906"
-  }
+* @icon .SG-ico--question
+* @markup
+*  <i class="SG-ico SG-ico--question"></i>
+*/
+.SG-ico--question:before {
+    content: "\ea03";
+}
 
 /**
- * @icon .SG-ico--question
- * @markup
- *  <i class="SG-ico SG-ico--question"></i>
- */
-  .SG-ico--question:before {
-    content: "\9907"
-  }
+* @icon .SG-ico--copy
+* @markup
+*  <i class="SG-ico SG-ico--copy"></i>
+*/
+.SG-ico--copy:before {
+    content: "\ea04";
+}
 
 /**
- * @icon .SG-ico--copy
- * @markup
- *  <i class="SG-ico SG-ico--copy"></i>
- */
-  .SG-ico--copy:before {
-    content: "\9908"
-  }
+* @icon .SG-ico--search
+* @markup
+*  <i class="SG-ico SG-ico--search"></i>
+*/
+.SG-ico--search:before {
+    content: "\ea05";
+}
 
-/**
- * @icon .SG-ico--search
- * @markup
- *  <i class="SG-ico SG-ico--search"></i>
- */
-  .SG-ico--search:before {
-    content: "\9909"
-  }
-
-/**
- * @icon .SG-ico--seach
- * @markup
- *  <i class="SG-ico SG-ico--seach"></i>
- */
-  .SG-ico--seach:before {
-    content: "\1697"
-  }

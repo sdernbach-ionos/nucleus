@@ -36,10 +36,7 @@ import path from 'path';                  // Path utilities
 import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
 import * as sass from 'sass';                  // Dart Sass compiler
 import pug from 'gulp-pug';              // Thin layer for Pug
-import rename from "gulp-rename";           // Renames a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
-import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
-import handlebars from 'handlebars';             // Handlebars template engine
 import chalk from 'chalk';                     // Terminal string styling
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
@@ -175,11 +172,6 @@ gulp.task('build:views', function () {
         filename: '[name].js',
         chunkFilename: '[chunkhash].bundle.js'
       },
-      module: {
-        rules: [
-          { test: /\.html$/, loader: require.resolve('../webpack-tpl-loader.js') }
-        ]
-      },
       resolve: {
         fallback: {
           path: false,
@@ -244,18 +236,17 @@ gulp.task('build:icons', async function () {
   await generateFonts({
     inputDir: config.sources + '/icons',
     outputDir: config.target + '/fonts',
+    fontsUrl: '../fonts',
     name: 'icons',
-    fontTypes: ['ttf', 'eot', 'woff'],
+    fontTypes: ['ttf', 'eot', 'woff', 'woff2', 'svg'],
     assetTypes: ['css'],
-    formatOptions: {
-      json: {
-        indent: 2
-      }
-    },
+    selector: 'ico',
     getIconId: ({ basename }) => {
       return basename.split('-')[1];
     },
-    templates: {},  // Disable default CSS generation
+    templates: {
+      css: './src/styles/templates/icons.hbs'
+    },
     pathOptions: {
       css: config.target + '/../src/styles/nuclides/icons.css'
     },
@@ -273,35 +264,6 @@ gulp.task('build:icons', async function () {
     round: 10e12,
     descent: 0
   });
-
-  // Read the generated JSON to create our custom CSS
-  const iconData = JSON.parse(await fs.readFile(config.target + '/fonts/icons.json', 'utf-8'));
-
-  // Transform to format expected by Handlebars template
-  const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
-    name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
-    unicodeHex: parseInt(codepoint, 16).toString(16).toUpperCase()
-  }));
-
-  // Register Handlebars helpers
-  handlebars.registerHelper('and', function(a, b) {
-    return a && b;
-  });
-  
-  handlebars.registerHelper('eq', function(a, b) {
-    return a === b;
-  });
-
-  // Generate CSS using the template
-  return gulp.src(config.sources + '/styles/templates/icons.hbs')
-    .pipe(consolidate('handlebars', {
-      glyphs: glyphs,
-      fontName: 'icons',
-      fontPath: '../fonts/',
-      className: 'ico'
-    }))
-    .pipe(rename({ basename: 'icons', extname: '.css' }))
-    .pipe(gulp.dest(config.sources + '/styles/nuclides/'));
 });
 
 /*
@@ -358,8 +320,8 @@ gulp.task('copy:images', function () {
       config.sources + '/images/*.png',
       config.sources + '/images/*.jpg'
     ])
-    .pipe(buffer())
-    .pipe(imagemin())
+    //.pipe(buffer())
+    //.pipe(imagemin())
     .pipe(gulp.dest(config.target + '/images'));
 });
 
