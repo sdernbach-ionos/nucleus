@@ -10,11 +10,11 @@
 
 @font-face {
     font-family: "SG-icons";
-    src: url("../fonts/SG-icons.ttf?df16d07844186a1b3525c036bf93bfdf") format("truetype"),
-url("../fonts/SG-icons.eot?df16d07844186a1b3525c036bf93bfdf#iefix") format("embedded-opentype"),
-url("../fonts/SG-icons.woff?df16d07844186a1b3525c036bf93bfdf") format("woff"),
-url("../fonts/SG-icons.woff2?df16d07844186a1b3525c036bf93bfdf") format("woff2"),
-url("../fonts/SG-icons.svg?df16d07844186a1b3525c036bf93bfdf#SG-icons") format("svg");
+    src: url("../fonts/SG-icons.ttf?31c912d2b9bb0fe25867eeec1450afed") format("truetype"),
+url("../fonts/SG-icons.eot?31c912d2b9bb0fe25867eeec1450afed#iefix") format("embedded-opentype"),
+url("../fonts/SG-icons.woff?31c912d2b9bb0fe25867eeec1450afed") format("woff"),
+url("../fonts/SG-icons.woff2?31c912d2b9bb0fe25867eeec1450afed") format("woff2"),
+url("../fonts/SG-icons.svg?31c912d2b9bb0fe25867eeec1450afed#SG-icons") format("svg");
     font-weight: normal;
     font-style: normal;
 }
@@ -82,11 +82,11 @@ url("../fonts/SG-icons.svg?df16d07844186a1b3525c036bf93bfdf#SG-icons") format("s
 }
 
 /**
-* @icon .SG-ico--search
+* @icon .SG-ico--seach
 * @markup
-*  <i class="SG-ico SG-ico--search"></i>
+*  <i class="SG-ico SG-ico--seach"></i>
 */
-.SG-ico--search:before {
+.SG-ico--seach:before {
     content: "\ea05";
 }
 
