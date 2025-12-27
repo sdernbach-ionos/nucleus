@@ -175,9 +175,7 @@ gulp.task('clean:static', function () {
         chunkFilename: '[chunkhash].bundle.js'
       },
       module: {
-        rules: [
-          { test: /\.html$/, loader: fileURLToPath(new URL('./webpack-tpl-loader.js', import.meta.url)) }
-        ]
+        rules: []
       },
       resolve: {
         fallback: {

@@ -9,8 +9,8 @@
  */
 
 /** Dependencies */
-import searchItem from '../templates/search-box-item.html';
-import colorPreview from '../templates/color-preview.html';
+import searchItem from '../templates/search-box-item.js';
+import colorPreview from '../templates/color-preview.js';
 
 /** Attachments */
 import 'selectize';
