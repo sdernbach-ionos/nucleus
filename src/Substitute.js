@@ -98,7 +98,7 @@ Substitute.methods.lipsum = function (quantity, type) {
 };
 
 Substitute.methods.include = function ( selector ) {
-  var markup = _.get(this.map, selector);
+  var markup = get(this.map, selector);
 
   if(markup) {
     return markup;
