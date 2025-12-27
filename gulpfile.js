@@ -122,7 +122,7 @@ gulp.task('icons', async function(){
       'code': 59906,
       'question': 59907,
       'copy': 59908,
-      'search': 59909,
+      'seach': 59909,
     },
     normalize: true,
     fontHeight: 1001,
