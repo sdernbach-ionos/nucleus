@@ -20,7 +20,7 @@ import Icon from './entities/Icon.js';
 import Molecule from './entities/Molecule.js';
 import Structure from './entities/Structure.js';
 
-import Dot from 'dot-object';
+import _ from 'lodash';
 
 var Transform = {};
 
@@ -35,7 +35,6 @@ var Transform = {};
  */
 Transform.forView = function(styles) {
   var viewData = {};
-  var dot = new Dot(' > ');
 
   for (var s in styles) {
     Verbose.spin('Analyzing styles');
@@ -51,13 +50,13 @@ Transform.forView = function(styles) {
     // Pick the section or create it, if not defined yet.
     // TODO: _e is a bad idea!!
     // TODO: Extract!
-    var section = dot.pick(entity.section, viewData) || {
+    // Convert dot notation with ' > ' separator to lodash path
+    var path = entity.section.replace(/ > /g, '.');
+    var section = _.get(viewData, path) || {
       '_e': []
     };
     section._e.push(entity);
-    dot.copy('data', entity.section, {
-      data: section
-    }, viewData);
+    _.set(viewData, path, section);
   }
 
   return viewData;
