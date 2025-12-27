@@ -35,6 +35,8 @@ import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import gulpEslint from 'gulp-eslint-new';    // Lints JavaScript
 import copy from 'gulp-copy';             // Copies files (ignores path prefixes)
 import postcss from "gulp-postcss";          // Parse style sheet files
+import postcssImport from "postcss-import";   // Inline CSS imports during build
+import postcssNested from "postcss-nested";   // Process nested CSS rules
 import reporter from "postcss-reporter";      // Reporter for PostCSS
 import stylelint from "stylelint";             // Lints styles according to a ruleset
 import scss from "postcss-scss";          // SCSS syntax for PostCSS
@@ -76,6 +78,12 @@ gulp.task('styles', function () {
       console.log(chalk.red('Sass Error:'), err.message);
       this.emit('end');
     }))
+    .pipe(postcss([
+      postcssNested(),  // First expand nested rules (including nested @import)
+      postcssImport({   // Then inline the @import statements
+        path: [__dirname + '/node_modules']
+      })
+    ]))
     .pipe(plumber.stop())
     .pipe(gulp.dest(TARGET + '/styles'));
 });
