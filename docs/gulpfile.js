@@ -38,9 +38,6 @@ import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import chalk from 'chalk';                     // Terminal string styling
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
-import merge from 'merge-stream';          // Merges two streams
-import spritesmith from 'gulp.spritesmith';      // Generates a spritesheet
-import buffer from 'vinyl-buffer';          // Creates a vinyl file buffer
 import autoprefixer from 'gulp-autoprefixer';     // Adds prefixes to css properties if needed
 import { deleteAsync } from 'del';                // Removes a set of files
 import webpack from 'webpack';               // Used for Javascript packing
@@ -268,44 +265,15 @@ gulp.task('build:icons', async function () {
 
 /*
 |--------------------------------------------------------------------------
-| SPRITES
+| LOGOS (Sprite replacement)
 |--------------------------------------------------------------------------
+| Copy logo images directly - no sprite generation needed for just 2 logos
 */
 
-gulp.task('build:sprites', function () {
-  // Hash the content of the sprite elements folders to bust the cache.
-  var hash = makeHash([
-    config.sources + '/sprites/*.png',
-    '!' + config.sources + '/sprites/logo-*.png'
-  ]);
-
-  // Create the data for our spritesheet
-  var sprite = gulp
-    .src([config.sources + '/sprites/*.png', '!' + config.sources + '/sprites/logo-*.png'])
-    .pipe(plumber())
-    .pipe(spritesmith({
-      imgName: 'sprite.png',
-      cssName: 'sprites.scss',
-      imgPath: '../images/sprite.png?v='+hash+'--'+config.version,
-      retinaSrcFilter: config.sources + '/sprites/*@2x.png',
-      retinaImgName: 'sprite@2x.png',
-      padding: 0,
-      retinaImgPath: '../images/sprite@2x.png?v='+hash+'--'+config.version,
-      cssTemplate: config.sources + '/styles/templates/sprites.handlebars'
-    }));
-
-
-  // Pipe image stream through image optimizer and onto disk
-  var imgStream = sprite.img
-      .pipe(buffer())
-      .pipe(imagemin())
-      .pipe(gulp.dest(config.target + '/images/'));
-
-  // Write SASS to disc
-  var cssStream = sprite.css.pipe(gulp.dest(config.sources + '/styles/nuclides/'));
-
-  // Return a merged stream to handle all `end` events
-  return merge(imgStream, cssStream);
+gulp.task('copy:logos', function () {
+  return gulp
+    .src(config.sources + '/sprites/logo-*.png', {encoding: false})
+    .pipe(gulp.dest(config.target + '/images/'));
 });
 
 /*
@@ -395,7 +363,7 @@ gulp.task('clean:styles', function () {
 */
 
 gulp.task('copy',     gulp.parallel('copy:images', 'copy:favicon'));
-gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('build:sprites', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
+gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('copy:logos', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
 gulp.task('dist',     gulp.series('build', 'copy'));
 gulp.task('dev',      gulp.series('build', 'copy', 'watch'));
 gulp.task('default',  gulp.series('dev'));

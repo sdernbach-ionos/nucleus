@@ -1,0 +1,25 @@
+/**
+ * Logo styles for sponsor logos
+ * Simple responsive image approach replacing sprite generation
+ */
+
+// Logo dimensions (1x size)
+$logo-hp-width: 200px;
+$logo-hp-height: 41px;
+$logo-pt-width: 242px;
+$logo-pt-height: 42px;
+
+@mixin retina-logo($name, $width, $height) {
+  display: inline-block;
+  width: $width;
+  height: $height;
+  background-size: $width $height;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('../images/logo-#{$name}.png');
+  
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) {
+    background-image: url('../images/logo-#{$name}@2x.png');
+  }
+}

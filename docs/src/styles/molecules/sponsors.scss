@@ -1,5 +1,5 @@
 @use "../../../../assets/styles/nuclides/colors";
-@use "../nuclides/sprites";
+@use "../nuclides/logos";
 
 /**
  * Yo, this is where it all began. Nucleus started as a hackday project
@@ -30,10 +30,10 @@
     border: none;
   }
   .sponsors__sponsor.sponsors--hp {
-    @include sprites.retina-sprite(sprites.$logo-hp-group);
+    @include logos.retina-logo('hp', logos.$logo-hp-width, logos.$logo-hp-height);
     margin-right: 40px;
   }
   .sponsors__sponsor.sponsors--pt {
-    @include sprites.retina-sprite(sprites.$logo-pt-group);
+    @include logos.retina-logo('pt', logos.$logo-pt-width, logos.$logo-pt-height);
   }
 }
