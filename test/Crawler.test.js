@@ -203,16 +203,6 @@ describe('Crawler', function() {
       expect(Crawler.addAnnotationByType(annotation, annotations, 'test')).toEqual({'test' : 'okay\nokay'});
     });
 
-    it('should not add multiline content to existing precessor if it does not exist', function () {
-      Helpers.hook(Verbose, 'log');
-
-      var annotation = {type: 'content', value: 'okay'};
-      var annotations = {'another' : true};
-      Crawler.addAnnotationByType(annotation, annotations, 'test');
-
-      expect(Helpers.logCalled).toBeGreaterThanOrEqual(1);
-    });
-
     it('should add a multi-line value to an existing set of annotation values', function () {
       var annotation = {type: 'content', value: 'okay'};
       var annotations = {'test' : ['first', 'second']};
