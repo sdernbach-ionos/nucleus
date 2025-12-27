@@ -19,8 +19,7 @@ import Atom from './entities/Atom.js';
 import Icon from './entities/Icon.js';
 import Molecule from './entities/Molecule.js';
 import Structure from './entities/Structure.js';
-
-import _ from 'lodash';
+import { get, set } from './utils.js';
 
 var Transform = {};
 
@@ -50,13 +49,13 @@ Transform.forView = function(styles) {
     // Pick the section or create it, if not defined yet.
     // TODO: _e is a bad idea!!
     // TODO: Extract!
-    // Convert dot notation with ' > ' separator to lodash path
+    // Convert dot notation with ' > ' separator to path
     var path = entity.section.replace(/ > /g, '.');
-    var section = _.get(viewData, path) || {
+    var section = get(viewData, path) || {
       '_e': []
     };
     section._e.push(entity);
-    _.set(viewData, path, section);
+    set(viewData, path, section);
   }
 
   return viewData;

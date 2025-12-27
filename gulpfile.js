@@ -32,6 +32,7 @@ import chalk from 'chalk';                     // Terminal string styling
 import { deleteAsync } from 'del';               // Removes a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
+import handlebars from 'handlebars';             // Handlebars template engine
 import rename from "gulp-rename";           // Renames a set of files
 import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
 import gulpEslint from 'gulp-eslint-new';    // Lints JavaScript
@@ -134,21 +135,30 @@ gulp.task('icons', async function(){
   // Read the generated JSON to create our custom CSS
   const iconData = JSON.parse(await fs.readFile(TARGET + '/fonts/SG-icons.json', 'utf-8'));
 
-  // Transform to format expected by lodash template
+  // Transform to format expected by Handlebars template
   const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
     name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
-    unicode: [String.fromCharCode(parseInt(codepoint, 16))]
+    unicodeHex: parseInt(codepoint, 16).toString(16).toUpperCase()
   }));
 
+  // Register Handlebars helpers
+  handlebars.registerHelper('and', function(a, b) {
+    return a && b;
+  });
+  
+  handlebars.registerHelper('eq', function(a, b) {
+    return a === b;
+  });
+
   // Generate CSS from template
-  return gulp.src(SOURCES + '/styles/tools/icons.lodash.css')
-    .pipe(consolidate('lodash', {
+  return gulp.src(SOURCES + '/styles/tools/icons.hbs')
+    .pipe(consolidate('handlebars', {
       glyphs: glyphs,
       fontName: 'SG-icons',
       fontPath: '../fonts/',
       className: 'SG-ico'
     }))
-    .pipe(rename({ basename: 'icons' }))
+    .pipe(rename({ basename: 'icons', extname: '.css' }))
     .pipe(gulp.dest(SOURCES + '/styles/nuclides/'));
 });
 

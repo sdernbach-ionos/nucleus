@@ -11,7 +11,7 @@
 
 
 
-import _ from 'lodash';
+import { get, set } from './utils.js';
 import { loremIpsum } from 'lorem-ipsum';
 import Verbose from './Verbose.js';
 
@@ -35,8 +35,8 @@ Substitute.process = function ( styles ) {
   // First, collect a map of all selector styles with markup annotation
   for(s in styles) {
     style = styles[s];
-    var selector = _.get(style, 'element.selector');
-    markup = _.get(style, 'annotations.markup');
+    var selector = get(style, 'element.selector');
+    markup = get(style, 'annotations.markup');
     if(selector && markup && (selector.indexOf(':') === -1)){
       this.map[selector] = markup;
     }
@@ -45,9 +45,9 @@ Substitute.process = function ( styles ) {
   // Loop through all styles again and apply substitutions
   for(s in styles) {
     style = styles[s];
-    markup = _.get(style, 'annotations.markup');
+    markup = get(style, 'annotations.markup');
     if(markup) {
-      _.set(style, 'annotations.markup', this.substitute(markup));
+      set(style, 'annotations.markup', this.substitute(markup));
     }
   }
 

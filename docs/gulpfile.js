@@ -39,6 +39,7 @@ import pug from 'gulp-pug';              // Thin layer for Pug
 import rename from "gulp-rename";           // Renames a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
+import handlebars from 'handlebars';             // Handlebars template engine
 import chalk from 'chalk';                     // Terminal string styling
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
@@ -276,21 +277,30 @@ gulp.task('build:icons', async function () {
   // Read the generated JSON to create our custom CSS
   const iconData = JSON.parse(await fs.readFile(config.target + '/fonts/icons.json', 'utf-8'));
 
-  // Transform to format expected by lodash template
+  // Transform to format expected by Handlebars template
   const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
     name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
-    codepoint: codepoint
+    unicodeHex: parseInt(codepoint, 16).toString(16).toUpperCase()
   }));
 
+  // Register Handlebars helpers
+  handlebars.registerHelper('and', function(a, b) {
+    return a && b;
+  });
+  
+  handlebars.registerHelper('eq', function(a, b) {
+    return a === b;
+  });
+
   // Generate CSS using the template
-  return gulp.src(config.sources + '/styles/templates/icons.lodash.css')
-    .pipe(consolidate('lodash', {
+  return gulp.src(config.sources + '/styles/templates/icons.hbs')
+    .pipe(consolidate('handlebars', {
       glyphs: glyphs,
       fontName: 'icons',
       fontPath: '../fonts/',
       className: 'ico'
     }))
-    .pipe(rename({ basename: 'icons' }))
+    .pipe(rename({ basename: 'icons', extname: '.css' }))
     .pipe(gulp.dest(config.sources + '/styles/nuclides/'));
 });
 
