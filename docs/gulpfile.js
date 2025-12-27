@@ -39,7 +39,6 @@ import pug from 'gulp-pug';              // Thin layer for Pug
 import rename from "gulp-rename";           // Renames a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
-import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import chalk from 'chalk';                     // Terminal string styling
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
@@ -153,8 +152,7 @@ gulp.task('build:views', function () {
       // ...
     }))
     .pipe(plumber.stop())
-    .pipe(gulp.dest(config.target))
-    .pipe(livereload());
+    .pipe(gulp.dest(config.target));
 });
 
 /*
@@ -224,8 +222,7 @@ gulp.task('build:styles', function () {
     }).on('error', sassCompiler.logError))
     .pipe(autoprefixer())
     .pipe(plumber.stop())
-    .pipe(gulp.dest(config.target + '/styles'))
-    .pipe(livereload());
+    .pipe(gulp.dest(config.target + '/styles'));
 });
 
 /*
@@ -238,11 +235,11 @@ gulp.task('build:icons', async function () {
   // Use fantasticon to generate icon fonts
   const fs = await import('fs/promises');
   const path = await import('path');
-  
+
   // Ensure output directory exists
   const fontsDir = path.join(config.target, 'fonts');
   await fs.mkdir(fontsDir, { recursive: true });
-  
+
   await generateFonts({
     inputDir: config.sources + '/icons',
     outputDir: config.target + '/fonts',
@@ -263,16 +260,16 @@ gulp.task('build:icons', async function () {
     round: 10e12,
     descent: 0
   });
-  
+
   // Read the generated JSON to create our custom CSS
   const iconData = JSON.parse(await fs.readFile(config.target + '/fonts/icons.json', 'utf-8'));
-  
+
   // Transform to format expected by lodash template
   const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
     name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
     codepoint: codepoint
   }));
-  
+
   // Generate CSS using the template
   return gulp.src(config.sources + '/styles/templates/icons.lodash.css')
     .pipe(consolidate('lodash', {
@@ -379,15 +376,6 @@ gulp.task('clean:styles', function () {
 |--------------------------------------------------------------------------
 */
 
-  gulp.task('livereload', function () {
-    console.log(chalk.bgGreen.white('Starting LiveReload ...'));
-    console.log(chalk.green('When developing locally make sure ',
-      '"Allow access to file URLs"'));
-     console.log(chalk.green('is ticked for LiveReload in Chrome\'s' +
-     ' Extensions settings'));
-    livereload.listen();
-  });
-
   gulp.task('watch:styles', function () {
     return gulp
       .watch([
@@ -425,5 +413,5 @@ gulp.task('clean:styles', function () {
 gulp.task('copy',     gulp.parallel('copy:images', 'copy:favicon'));
 gulp.task('build',    gulp.series(gulp.parallel('clean:scripts', 'clean:styles'), gulp.parallel('build:sprites', 'build:icons'), gulp.parallel('build:views', 'build:styles', 'build:scripts')));
 gulp.task('dist',     gulp.series('build', 'copy'));
-gulp.task('dev',      gulp.series('build', 'copy', gulp.parallel('watch', 'livereload')));
+gulp.task('dev',      gulp.series('build', 'copy', 'watch'));
 gulp.task('default',  gulp.series('dev'));

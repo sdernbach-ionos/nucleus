@@ -28,7 +28,6 @@ import gulp from 'gulp';
 import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
 import * as sass from 'sass';                  // Dart Sass compiler
 import webpack from 'webpack';               // Used for Javascript packing
-import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import chalk from 'chalk';                     // Terminal string styling
 import { deleteAsync } from 'del';               // Removes a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
@@ -82,8 +81,7 @@ gulp.task('styles', function () {
       this.emit('end');
     }))
     .pipe(plumber.stop())
-    .pipe(gulp.dest(TARGET + '/styles'))
-    .pipe(livereload());
+    .pipe(gulp.dest(TARGET + '/styles'));
 });
 
 /*
@@ -96,11 +94,11 @@ gulp.task('icons', async function(){
   // Use fantasticon to generate icon fonts
   const fs = await import('fs/promises');
   const path = await import('path');
-  
+
   // Ensure output directory exists
   const fontsDir = path.join(TARGET, 'fonts');
   await fs.mkdir(fontsDir, { recursive: true });
-  
+
   await generateFonts({
     inputDir: SOURCES + '/icons',
     outputDir: TARGET + '/fonts',
@@ -121,16 +119,16 @@ gulp.task('icons', async function(){
     round: 10e12,
     descent: 0
   });
-  
+
   // Read the generated JSON to create our custom CSS
   const iconData = JSON.parse(await fs.readFile(TARGET + '/fonts/SG-icons.json', 'utf-8'));
-  
+
   // Transform to format expected by lodash template
   const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
     name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
     unicode: [String.fromCharCode(parseInt(codepoint, 16))]
   }));
-  
+
   // Generate CSS from template
   return gulp.src(SOURCES + '/styles/tools/icons.lodash.css')
     .pipe(consolidate('lodash', {
@@ -265,15 +263,6 @@ gulp.task('lint:styles', function () {
 |--------------------------------------------------------------------------
 */
 
-  gulp.task('livereload', function () {
-    console.log(chalk.bgGreen.white('Starting LiveReload ...'));
-    console.log(chalk.green('When developing locally make sure ',
-      '"Allow access to file URLs"'));
-     console.log(chalk.green('is ticked for LiveReload in Chrome\'s' +
-     ' Extensions settings'));
-    livereload.listen();
-  });
-
   gulp.task('watch:styles', function () {
     return gulp
       .watch([
@@ -291,8 +280,7 @@ gulp.task('lint:styles', function () {
         TARGET + '/index.html'
       ], function ()  {
         return gulp
-          .src(TARGET + '/index.html')
-          .pipe(livereload());
+          .src(TARGET + '/index.html');
       })
       .on('change', watcher_log_callback);
   });
@@ -347,7 +335,7 @@ function webpack_error_handler (err, stats, callback) {
 
 gulp.task('build',   gulp.series(gulp.parallel('clean:styles', 'clean:icons', 'clean:scripts', 'clean:static'), 'icons', gulp.parallel('styles', 'scripts', 'copy:static')));
 gulp.task('lint',    gulp.parallel('lint:scripts'/*, 'lint:styles'*/));
-gulp.task('watch',   gulp.parallel('watch:styles', 'watch:markup', 'watch:scripts', 'livereload'));
+gulp.task('watch',   gulp.parallel('watch:styles', 'watch:markup', 'watch:scripts'));
 gulp.task('dev',     gulp.series('build', gulp.parallel('watch', 'lint')));
 gulp.task('default', gulp.series('dev'));
 
