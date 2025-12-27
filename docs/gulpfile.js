@@ -3,7 +3,7 @@ import { dirname } from 'path';
 import { createRequire } from 'module';
 import { readFileSync } from 'fs';
 import { createHash } from 'crypto';
-import { sync as globSync } from 'glob';
+import { globSync } from 'glob';
 import { chain } from 'underscore';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,7 +37,7 @@ import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
 import * as sass from 'sass';                  // Dart Sass compiler
 import pug from 'gulp-pug';              // Thin layer for Pug
 import rename from "gulp-rename";           // Renames a set of files
-import iconfont from 'gulp-iconfont';         // Generates an icon-font
+import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import gutil from 'gulp-util';             // Utility toolbox
@@ -234,25 +234,55 @@ gulp.task('build:styles', function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('build:icons', function () {
-  return gulp.src(config.sources + '/icons/*.svg')
-    .pipe(iconfont({
+gulp.task('build:icons', async function () {
+  // Use fantasticon to generate icon fonts
+  const fs = await import('fs/promises');
+  const path = await import('path');
+  
+  // Ensure output directory exists
+  const fontsDir = path.join(config.target, 'fonts');
+  await fs.mkdir(fontsDir, { recursive: true });
+  
+  await generateFonts({
+    inputDir: config.sources + '/icons',
+    outputDir: config.target + '/fonts',
+    name: 'icons',
+    fontTypes: ['ttf', 'eot', 'woff'],
+    assetTypes: ['json'],
+    formatOptions: {
+      json: {
+        indent: 2
+      }
+    },
+    templates: {},  // Disable default CSS generation
+    pathOptions: {
+      json: config.target + '/fonts/icons.json'
+    },
+    normalize: true,
+    fontHeight: 1001,
+    round: 10e12,
+    descent: 0
+  });
+  
+  // Read the generated JSON to create our custom CSS
+  const iconData = JSON.parse(await fs.readFile(config.target + '/fonts/icons.json', 'utf-8'));
+  
+  // Transform to format expected by lodash template
+  const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
+    name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
+    codepoint: codepoint
+  }));
+  
+  // Generate CSS using the template
+  return gulp.src(config.sources + '/styles/templates/icons.lodash.css')
+    .pipe(consolidate('lodash', {
+      glyphs: glyphs,
       fontName: 'icons',
-      prependUnicode: true,
-      formats: ['ttf', 'eot', 'woff'],
+      fontPath: '../fonts/',
+      className: 'ico'
     }))
-    .on('glyphs', function( glyphs ) {
-      gulp.src(config.sources + '/styles/templates/icons.lodash.css')
-          .pipe(consolidate('lodash', {
-            glyphs: glyphs,
-            fontName: 'icons',
-            fontPath: '../fonts/',
-            className: 'ico'
-          }))
-          .pipe(rename({ basename: 'icons' }))
-          .pipe(gulp.dest(config.sources + '/styles/nuclides/'));
-      })
-    .pipe(gulp.dest(config.target + '/fonts/'));
+    .pipe(rename({ basename: 'icons' }))
+    .pipe(gulp.dest(config.sources + '/styles/nuclides/'));
 });
 
 /*
