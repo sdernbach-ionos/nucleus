@@ -58,11 +58,11 @@
     "clipboard": "^2.0.11",
     "consolidate": "^1.0.4",
     "del": "^8.0.1",
+    "fantasticon": "^3.0.0",
     "gulp": "^5.0.1",
     "gulp-autoprefixer": "^10.0.0",
     "gulp-consolidate": "^0.2.0",
     "gulp-copy": "^5.0.0",
-    "gulp-iconfont": "^11.0.1",
     "gulp-imagemin": "^9.2.0",
     "gulp-jshint": "^2.1.0",
     "gulp-livereload": "^4.0.2",
@@ -91,6 +91,7 @@
     "tpl-loader": "^0.2.1",
     "underscore": "^1.13.7",
     "vinyl-buffer": "^1.0.1",
+    "webfonts-generator": "^0.4.0",
     "webpack": "^5.98.0"
   }
 }

@@ -31,7 +31,7 @@ import webpack from 'webpack';               // Used for Javascript packing
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
 import gutil from 'gulp-util';             // Utility toolbox
 import { deleteAsync } from 'del';               // Removes a set of files
-import iconfont from 'gulp-iconfont';         // Generates an icon-font
+import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import rename from "gulp-rename";           // Renames a set of files
 import logwarn from 'gulp-logwarn';          // Warns on leftover debug code
@@ -92,27 +92,55 @@ gulp.task('styles', function () {
 |--------------------------------------------------------------------------
 */
 
-gulp.task('icons', function(){
-  return gulp.src(SOURCES + '/icons/*.svg')
-    .pipe(iconfont({
-      fontName: 'SG-icons', // required
-      prependUnicode: true, // recommended option
-      formats: ['ttf', 'eot', 'woff'], // default, 'woff2' and 'svg' are available
-      normalize: true,
-      fontHeight: 1001
+gulp.task('icons', async function(){
+  // Use fantasticon to generate icon fonts
+  const fs = await import('fs/promises');
+  const path = await import('path');
+  
+  // Ensure output directory exists
+  const fontsDir = path.join(TARGET, 'fonts');
+  await fs.mkdir(fontsDir, { recursive: true });
+  
+  await generateFonts({
+    inputDir: SOURCES + '/icons',
+    outputDir: TARGET + '/fonts',
+    name: 'SG-icons',
+    fontTypes: ['ttf', 'eot', 'woff'],
+    assetTypes: ['json'],
+    formatOptions: {
+      json: {
+        indent: 2
+      }
+    },
+    templates: {},  // Disable default CSS generation
+    pathOptions: {
+      json: TARGET + '/fonts/SG-icons.json'
+    },
+    normalize: true,
+    fontHeight: 1001,
+    round: 10e12,
+    descent: 0
+  });
+  
+  // Read the generated JSON to create our custom CSS
+  const iconData = JSON.parse(await fs.readFile(TARGET + '/fonts/SG-icons.json', 'utf-8'));
+  
+  // Transform to format expected by lodash template
+  const glyphs = Object.entries(iconData).map(([name, codepoint]) => ({
+    name: name.replace(/^uEA[0-9]+-/, ''), // Remove unicode prefix if present
+    unicode: [String.fromCharCode(parseInt(codepoint, 16))]
+  }));
+  
+  // Generate CSS from template
+  return gulp.src(SOURCES + '/styles/tools/icons.lodash.css')
+    .pipe(consolidate('lodash', {
+      glyphs: glyphs,
+      fontName: 'SG-icons',
+      fontPath: '../fonts/',
+      className: 'SG-ico'
     }))
-      .on('glyphs', function(glyphs) {
-        gulp.src(SOURCES + '/styles/tools/icons.lodash.css')
-          .pipe(consolidate('lodash', {
-            glyphs: glyphs,
-            fontName: 'SG-icons',
-            fontPath: '../fonts/',
-            className: 'SG-ico'
-          }))
-          .pipe(rename({ basename: 'icons' }))
-          .pipe(gulp.dest(SOURCES + '/styles/nuclides/'));
-      })
-    .pipe(gulp.dest(TARGET + '/fonts/'));
+    .pipe(rename({ basename: 'icons' }))
+    .pipe(gulp.dest(SOURCES + '/styles/nuclides/'));
 });
 
 /*

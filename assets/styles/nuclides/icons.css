@@ -45,30 +45,12 @@
 
 
 /**
- * @icon .SG-ico--logo
+ * @icon .SG-ico--seach
  * @markup
- *  <i class="SG-ico SG-ico--logo"></i>
+ *  <i class="SG-ico SG-ico--seach"></i>
  */
-  .SG-ico--logo:before {
-    content: "\EA01"
-  }
-
-/**
- * @icon .SG-ico--code
- * @markup
- *  <i class="SG-ico SG-ico--code"></i>
- */
-  .SG-ico--code:before {
-    content: "\EA02"
-  }
-
-/**
- * @icon .SG-ico--question
- * @markup
- *  <i class="SG-ico SG-ico--question"></i>
- */
-  .SG-ico--question:before {
-    content: "\EA03"
+  .SG-ico--seach:before {
+    content: "\1697"
   }
 
 /**
@@ -77,14 +59,32 @@
  *  <i class="SG-ico SG-ico--copy"></i>
  */
   .SG-ico--copy:before {
-    content: "\EA04"
+    content: "\1698"
   }
 
 /**
- * @icon .SG-ico--seach
+ * @icon .SG-ico--question
  * @markup
- *  <i class="SG-ico SG-ico--seach"></i>
+ *  <i class="SG-ico SG-ico--question"></i>
  */
-  .SG-ico--seach:before {
-    content: "\EA05"
+  .SG-ico--question:before {
+    content: "\1699"
+  }
+
+/**
+ * @icon .SG-ico--code
+ * @markup
+ *  <i class="SG-ico SG-ico--code"></i>
+ */
+  .SG-ico--code:before {
+    content: "\1700"
+  }
+
+/**
+ * @icon .SG-ico--logo
+ * @markup
+ *  <i class="SG-ico SG-ico--logo"></i>
+ */
+  .SG-ico--logo:before {
+    content: "\1701"
   }
