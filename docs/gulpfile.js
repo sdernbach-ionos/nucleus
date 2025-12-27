@@ -171,6 +171,8 @@ gulp.task('build:views', function () {
         chunkFilename: '[chunkhash].bundle.js'
       },
       resolve: {
+        fullySpecified: false,
+        extensions: ['.js', '.json'],
         fallback: {
           path: false,
           fs: false

@@ -1,4 +1,4 @@
 'use strict';
 
-require('./preview-draggable');
-require('./code-highlight');
+import './preview-draggable.js';
+import './code-highlight.js';
