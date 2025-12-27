@@ -85,7 +85,7 @@ Substitute.methods.lipsum = function (quantity, type) {
   }
 
   var rnd = 0.01;
-  
+
   return loremIpsum({
     count: quantity,
     units: type,
@@ -98,7 +98,7 @@ Substitute.methods.lipsum = function (quantity, type) {
 };
 
 Substitute.methods.include = function ( selector ) {
-  var markup = get(this.map, selector);
+  var markup = this.map[selector];
 
   if(markup) {
     return markup;

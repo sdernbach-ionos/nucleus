@@ -21,8 +21,10 @@ $grid-gutter: 20px;
   margin-right: math.div(-$grid-gutter, 2);
 
   &.SG-row-full {
-    margin-left: 0;
-    margin-right: 0;
+    width: 100vw;
+    margin-left: 50% !important;
+    margin-right: 0 !important;
+    transform: translateX(-50%);
   }
 
   &.SG-row-align-middle {
