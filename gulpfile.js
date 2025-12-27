@@ -29,7 +29,7 @@ import gulpSass from 'gulp-sass';             // Transpiles SASS to CSS
 import * as sass from 'sass';                  // Dart Sass compiler
 import webpack from 'webpack';               // Used for Javascript packing
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
-import gutil from 'gulp-util';             // Utility toolbox
+import chalk from 'chalk';                     // Terminal string styling
 import { deleteAsync } from 'del';               // Removes a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
@@ -78,7 +78,7 @@ gulp.task('styles', function () {
       outputStyle: PRODUCTION ? 'compressed' : 'expanded'
     }).on('error', function(err) {
       // Log the error but don't fail the build
-      gutil.log(gutil.colors.red('Sass Error:'), err.message);
+      console.log(chalk.red('Sass Error:'), err.message);
       this.emit('end');
     }))
     .pipe(plumber.stop())
@@ -266,10 +266,10 @@ gulp.task('lint:styles', function () {
 */
 
   gulp.task('livereload', function () {
-    gutil.log(gutil.colors.bgGreen.white('Starting LiveReload ...'));
-    gutil.log(gutil.colors.green('When developing locally make sure ',
+    console.log(chalk.bgGreen.white('Starting LiveReload ...'));
+    console.log(chalk.green('When developing locally make sure ',
       '"Allow access to file URLs"'));
-     gutil.log(gutil.colors.green('is ticked for LiveReload in Chrome\'s' +
+     console.log(chalk.green('is ticked for LiveReload in Chrome\'s' +
      ' Extensions settings'));
     livereload.listen();
   });
@@ -308,7 +308,7 @@ gulp.task('lint:styles', function () {
 
  function watcher_log_callback (event) {
    var relative_path = event.path.replace(__dirname, '');
-   gutil.log('file ' + gutil.colors.magenta(relative_path) + ' ' + event.type);
+   console.log('file ' + chalk.magenta(relative_path) + ' ' + event.type);
  }
 
 /*
@@ -318,9 +318,9 @@ gulp.task('lint:styles', function () {
 */
 function webpack_error_handler (err, stats, callback) {
 
-  if(err) throw new gutil.PluginError('webpack', err);
+  if(err) throw new Error('webpack: ' + err);
   if(PRODUCTION){
-    gutil.log('[webpack]', stats.toString({
+    console.log('[webpack]', stats.toString({
         // output options
         source: false
     }));
@@ -329,10 +329,10 @@ function webpack_error_handler (err, stats, callback) {
       errorDetails: false
     });
     if(jsonStats.errors.length > 0){
-        gutil.log(gutil.colors.red('ERROR\n' + jsonStats.errors.join('\n')));
+        console.log(chalk.red('ERROR\n' + jsonStats.errors.join('\n')));
     }
     if(jsonStats.warnings.length > 0){
-        gutil.log(gutil.colors.yellow('WARNING\n' + jsonStats.warnings.join('\n')));
+        console.log(chalk.yellow('WARNING\n' + jsonStats.warnings.join('\n')));
     }
   }
 

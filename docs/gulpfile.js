@@ -40,7 +40,7 @@ import rename from "gulp-rename";           // Renames a set of files
 import { generateFonts } from 'fantasticon';     // Generates icon fonts
 import consolidate from 'gulp-consolidate';      // Passes a file to a template engine
 import livereload from 'gulp-livereload';       // Reloads the browser window after changes
-import gutil from 'gulp-util';             // Utility toolbox
+import chalk from 'chalk';                     // Terminal string styling
 import plumber from 'gulp-plumber';          // Catches gulp errors and prevents exit
 import imagemin from 'gulp-imagemin';         // Optimizes images
 import merge from 'merge-stream';          // Merges two streams
@@ -115,9 +115,9 @@ var config = {
 
   var webpack_error_handler = function (err, stats, callback) {
 
-    if(err) throw new gutil.PluginError('webpack', err);
+    if(err) throw new Error('webpack: ' + err);
     if(config.production){
-      gutil.log('[webpack]', stats.toString({
+      console.log('[webpack]', stats.toString({
           // output options
           source: false
       }));
@@ -126,10 +126,10 @@ var config = {
         errorDetails: false
       });
       if(jsonStats.errors.length > 0){
-          gutil.log(gutil.colors.red('ERROR\n' + jsonStats.errors.join('\n')));
+          console.log(chalk.red('ERROR\n' + jsonStats.errors.join('\n')));
       }
       if(jsonStats.warnings.length > 0){
-          gutil.log(gutil.colors.yellow('WARNING\n' + jsonStats.warnings.join('\n')));
+          console.log(chalk.yellow('WARNING\n' + jsonStats.warnings.join('\n')));
       }
     }
 
@@ -380,10 +380,10 @@ gulp.task('clean:styles', function () {
 */
 
   gulp.task('livereload', function () {
-    gutil.log(gutil.colors.bgGreen.white('Starting LiveReload ...'));
-    gutil.log(gutil.colors.green('When developing locally make sure ',
+    console.log(chalk.bgGreen.white('Starting LiveReload ...'));
+    console.log(chalk.green('When developing locally make sure ',
       '"Allow access to file URLs"'));
-     gutil.log(gutil.colors.green('is ticked for LiveReload in Chrome\'s' +
+     console.log(chalk.green('is ticked for LiveReload in Chrome\'s' +
      ' Extensions settings'));
     livereload.listen();
   });
@@ -413,7 +413,7 @@ gulp.task('clean:styles', function () {
 
   function watcher_log_callback (event) {
     var relative_path = event.path.replace(__dirname, '');
-    gutil.log('file ' + gutil.colors.magenta(relative_path) + ' ' + event.type);
+    console.log('file ' + chalk.magenta(relative_path) + ' ' + event.type);
   }
 
 /*
