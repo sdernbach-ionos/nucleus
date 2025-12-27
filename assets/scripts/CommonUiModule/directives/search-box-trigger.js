@@ -45,11 +45,11 @@ SearchBoxTriggerDirective.hideSearch = function () {
   $('.SG-search').hide();
 };
 
-SearchBoxTriggerDirective.showSearch = function () {
+SearchBoxTriggerDirective.showSearch = function (e) {
   this.isVisible = true;
   $('.SG-search').show();
   $('.selectize-input input').focus();
-  event.stopPropagation();
+  e.stopPropagation();
   return false;
 };
 
