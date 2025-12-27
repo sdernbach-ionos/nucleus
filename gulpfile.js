@@ -104,15 +104,25 @@ gulp.task('icons', async function(){
     outputDir: TARGET + '/fonts',
     name: 'SG-icons',
     fontTypes: ['ttf', 'eot', 'woff'],
-    assetTypes: ['json'],
+    assetTypes: ['css'],
     formatOptions: {
       json: {
         indent: 2
       }
     },
+    getIconId: ({ basename }) => {
+      return basename.split('-')[1];
+    },
     templates: {},  // Disable default CSS generation
     pathOptions: {
-      json: TARGET + '/fonts/SG-icons.json'
+      css: TARGET + '/fonts/SG-icons.css' // TODO adjust
+    },
+    codepoints: {
+      'logo': 59905,
+      'code': 59906,
+      'question': 59907,
+      'copy': 59908,
+      'search': 59909,
     },
     normalize: true,
     fontHeight: 1001,

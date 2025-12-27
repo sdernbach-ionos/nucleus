@@ -245,15 +245,27 @@ gulp.task('build:icons', async function () {
     outputDir: config.target + '/fonts',
     name: 'icons',
     fontTypes: ['ttf', 'eot', 'woff'],
-    assetTypes: ['json'],
+    assetTypes: ['css'],
     formatOptions: {
       json: {
         indent: 2
       }
     },
+    getIconId: ({ basename }) => {
+      return basename.split('-')[1];
+    },
     templates: {},  // Disable default CSS generation
     pathOptions: {
-      json: config.target + '/fonts/icons.json'
+      css: config.target + '/../src/styles/nuclides/icons.css'
+    },
+    codepoints: {
+      'logo': 59905,
+      'github': 59907,
+      'tools': 59908,
+      'molecule': 59909,
+      'rescue': 59910,
+      'search': 59911,
+      'glide': 59912,
     },
     normalize: true,
     fontHeight: 1001,
