@@ -8,14 +8,12 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Dependencies */
-var searchItem = require('../templates/search-box-item.html');
-var colorPreview = require('../templates/color-preview.html');
+import searchItem from '../templates/search-box-item.html';
+import colorPreview from '../templates/color-preview.html';
 
 /** Attachments */
-require('selectize');
+import 'selectize';
 
 /** Helpers */
 function capitalizeFirstLetter(string) {

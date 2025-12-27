@@ -9,6 +9,4 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
-require('CommonUiModule/module');
+import 'CommonUiModule/module.js';
