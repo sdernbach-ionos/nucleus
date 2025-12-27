@@ -1,6 +1,5 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { createRequire } from 'module';
 import { readFileSync } from 'fs';
 import { createHash } from 'crypto';
 import { globSync } from 'glob';
@@ -319,6 +318,8 @@ gulp.task('copy:images', function () {
       config.sources + '/images/*.png',
       config.sources + '/images/*.jpg'
     ], { encoding: false })
+    .pipe(buffer())
+    .pipe(imagemin())
     .pipe(gulp.dest(config.target + '/images'));
 });
 
