@@ -55,7 +55,7 @@ Substitute.process = function ( styles ) {
 };
 
 Substitute.substitute = function ( markup ) {
-  if(_.isEmpty(markup)) {
+  if(!markup || markup.trim() === '') {
     return markup;
   }
 
