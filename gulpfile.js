@@ -166,7 +166,7 @@ gulp.task('clean:static', function () {
     webpack({
       context: __dirname + '/' + SOURCES + '/scripts',
       entry: {
-        'app': './app',
+        'app': './app.js',
       },
       output: {
         path: __dirname + '/' + TARGET + '/scripts/',
@@ -184,6 +184,7 @@ gulp.task('clean:static', function () {
           path: false,
           fs: false
         },
+        fullySpecified: false,
         modules: [
           __dirname + '/' + SOURCES + '/scripts',
           'node_modules'

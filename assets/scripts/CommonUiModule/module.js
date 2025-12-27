@@ -8,10 +8,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
-require('./directives/code-preview');
-require('./directives/code-preview-toggle');
-require('./directives/copy-button');
-require('./directives/search-box');
-require('./directives/search-box-trigger');
+import './directives/code-preview.js';
+import './directives/code-preview-toggle.js';
+import './directives/copy-button.js';
+import './directives/search-box.js';
+import './directives/search-box-trigger.js';

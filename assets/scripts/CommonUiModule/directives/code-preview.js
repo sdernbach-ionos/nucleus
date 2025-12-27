@@ -8,13 +8,11 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Dependencies */
-var Prism = require('prismjs');
+import Prism from 'prismjs';
 
 /** Attachments */
-require('prismjs/components/prism-scss');
+import 'prismjs/components/prism-scss.js';
 
 /** Directive */
 $('[data-d-code-preview]').each(function (i, element ) {

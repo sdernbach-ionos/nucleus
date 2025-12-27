@@ -8,10 +8,8 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-'use strict';
-
 /** Dependencies */
-var keymaster = require('keymaster');
+import keymaster from 'keymaster';
 
 /** Directive */
 var SearchBoxTriggerDirective = {};
