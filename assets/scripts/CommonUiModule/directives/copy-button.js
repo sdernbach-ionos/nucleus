@@ -16,9 +16,9 @@ import Clipboard from 'clipboard';
 $('[data-d-copy]').each(function (i, element ) {
   var copy = new Clipboard(element);
   copy.on('success', function () {
-    SweetAlert2({
+    SweetAlert2.fire({
       title: "Copied!",
-      type: "success",
+      icon: "success",
       toast: true,
       showConfirmButton: false,
       position: 'top-right',
