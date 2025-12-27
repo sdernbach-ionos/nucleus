@@ -288,7 +288,6 @@ gulp.task('copy:images', function () {
       config.sources + '/images/*.png',
       config.sources + '/images/*.jpg'
     ], { encoding: false })
-    .pipe(buffer())
     .pipe(imagemin())
     .pipe(gulp.dest(config.target + '/images'));
 });
