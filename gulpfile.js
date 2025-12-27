@@ -104,7 +104,7 @@ gulp.task('icons', async function(){
     outputDir: TARGET + '/fonts',
     name: 'SG-icons',
     fontTypes: ['ttf', 'eot', 'woff'],
-    assetTypes: ['css'],
+    assetTypes: ['css', 'json'],
     formatOptions: {
       json: {
         indent: 2
@@ -115,7 +115,8 @@ gulp.task('icons', async function(){
     },
     templates: {},  // Disable default CSS generation
     pathOptions: {
-      css: TARGET + '/fonts/SG-icons.css' // TODO adjust
+        css: TARGET + '/fonts/SG-icons.css', // TODO adjust
+        json: TARGET + '/fonts/SG-icons.json' // TODO adjust
     },
     codepoints: {
       'logo': 59905,
